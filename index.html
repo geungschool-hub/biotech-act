@@ -784,14 +784,46 @@ html:not(.unlocked) #draftGate{display:flex;}
   <div class="pagenext"><button type="button" class="btn" onclick="goPage(5, true)">5 · 종합 ▶</button></div>
 </div>
 <div class="page hide" id="page5">
-  <div class="card" data-hub-card="p5"><h2>5 · 종합<span class="yr">교과서 108쪽</span></h2>
-    <div class="soon">🛠 이 쪽은 <b>준비 중이다.</b><br>난치병 치료 사례 세 가지를 기술과 연결하고, 더 풀어 보기와 정리하기를 한다.</div></div>
+  <!-- ══ ⑬ 난치병 치료 사례 ══ -->
+  <div class="card" data-hub-card="s13">
+    <div class="hd">
+      <h2 class="gene">⑬ 난치병 치료에 활용된 생명공학기술<span class="yr">교과서 108쪽 탐구</span></h2>
+      <span class="tag" id="caseProg">연결한 사례 0 / 3</span>
+    </div>
+    <p class="sub">사례마다 어떤 생명공학기술이 쓰였는지 고르시오. 옳게 고르면 그 기술의 원리를 앞 쪽에서 확인한 내용으로 되짚어 준다.</p>
+    <div id="caseBox"></div>
+    <div class="msg hide" id="fb_case"></div>
+    <div class="secreset"><button type="button" onclick="resetSec('case')">↻ ⑬ 다시 하기</button></div>
+  </div>
+
+  <!-- ══ 💪 더 풀어 보기 ══ -->
+  <div class="card" data-hub-card="more">
+    <div class="hd">
+      <h2 class="amber">💪 더 풀어 보기</h2>
+      <span class="tag" id="pracProg">푼 문항 0 / 4</span>
+    </div>
+    <p class="sub">1~4쪽에서 확인한 내용을 넘나드는 문항이다. 몇 번을 다시 골라도 된다 — 고른 답은 기록되지 않는다.</p>
+    <div id="pracBox"></div>
+    <div class="secreset"><button type="button" onclick="resetSec('prac')">↻ 💪 다시 풀기</button></div>
+  </div>
+
+  <!-- ══ ⑭ 정리하기 ══ -->
+  <div class="card" data-hub-card="wrap">
+    <div class="hd">
+      <h2 class="green">⑭ 정리하기</h2>
+      <span class="tag" id="writeProg">작성한 문항 0 / 4</span>
+    </div>
+    <p class="sub">활동에서 확인한 내용을 바탕으로 서술하시오. 일정 분량 이상 서술하면 모범답안을 볼 수 있다.</p>
+    <div id="writeBox"></div>
+    <div class="selfcheck" id="selfBox"></div>
+    <div class="secreset"><button type="button" onclick="resetSec('write')">↻ ⑭ 다시 하기</button></div>
+  </div>
 </div>
 
   <footer>
     <button class="btn gray" onclick="resetAll()">🔄 처음부터 다시 하기</button>
     <p class="src">
-      출처 — 고등학교 「생물의 유전」(이준규 외) 102~107쪽 「생명공학기술의 종류」 — DNA 재조합기술 · 단클론항체 · 줄기세포 · 유전자 편집 기술 · 그림 Ⅲ-2 ~ Ⅲ-8 · 71쪽 그림 Ⅱ-9<br>
+      출처 — 고등학교 「생물의 유전」(이준규 외) 102~108쪽 「생명공학기술의 종류」 — DNA 재조합기술 · 단클론항체 · 줄기세포 · 유전자 편집 기술 · 그림 Ⅲ-2 ~ Ⅲ-8 · 108쪽 탐구 · 71쪽 그림 Ⅱ-9<br>
       성취기준 12유전03-02 · 12유전03-03 &nbsp;|&nbsp; <i>lacZ</i> · X-gal · 제한효소 Ⓑ · 진단 키트의 무효 판정은 교과서 밖 설명이다.
     </p>
   </footer>
@@ -964,6 +996,7 @@ function freshState(){
     crGuide:'',        /* ⑫ 고른 가이드 RNA */
     crTried:{},
     crSeen:false,
+    caseOk:{},         /* ⑬ 옳게 연결한 사례 */
     qPick:{}, pPick:{}, ta:{}, self:{},
     teacherUnlock:false,
     seq:0
@@ -1033,7 +1066,8 @@ var STEPS = [
   { key:'adc',   no:'⑨', name:'암 치료', sub:'항체-약물' },
   { key:'stem',  no:'⑩', name:'줄기세포', sub:'세 가지 방법' },
   { key:'sort3', no:'⑪', name:'특징 분류', sub:'문장 9개' },
-  { key:'cr',    no:'⑫', name:'유전자 가위', sub:'가이드 RNA' }
+  { key:'cr',    no:'⑫', name:'유전자 가위', sub:'가이드 RNA' },
+  { key:'case',  no:'⑬', name:'난치병 사례', sub:'108쪽' }
 ];
 function cutCount(){ return (siteOk(state.cutSite) ? 1 : 0) + (state.cutPlas === 'A' ? 1 : 0) + (state.cutGene ? 1 : 0); }
 function medCount(){ var n = 0; MEDIA.forEach(function(m){ if (state.medSeen[m.id]) n++; }); return n; }
@@ -1050,6 +1084,7 @@ function stepDone(k){
   if (k === 'adc')   return !!state.adcSeen && answeredOf(Q_ADC, state.qPick) === Q_ADC.length;
   if (k === 'stem')  return stemSeenCount() === STEM_ROWS.length && answeredOf(Q_STEM, state.qPick) === Q_STEM.length;
   if (k === 'sort3') return factOkCount() === STEM_FACTS.length;
+  if (k === 'case')  return caseOkCount() === CASES.length;
   if (k === 'cr')    return !!state.crSeen && answeredOf(Q_CR, state.qPick) === Q_CR.length;
   return false;
 }
@@ -2224,6 +2259,60 @@ function crPick(id){
   saveState(); renderCr(); updateAll();
 }
 
+/* ══════════════════ 12-8. ⑬ 난치병 치료 사례 (108쪽) ══════════════════ */
+var TECHS = [
+  { id:'rdna', name:'DNA 재조합기술', page:1 },
+  { id:'mab',  name:'단클론항체', page:2 },
+  { id:'stem', name:'줄기세포', page:3 },
+  { id:'edit', name:'유전자 편집 기술', page:4 }
+];
+var CASES = [
+  { id:'c1', title:'사례 1 · 류머티즘성 관절염',
+    t:'면역세포를 활성화시켜 비정상적인 염증반응을 일으키는 종양괴사인자(TNF-α)를 <b>선택적으로 억제하는 약물</b>이 류머티즘성 관절염 치료에 이용된다.',
+    a:'mab',
+    why:'특정 물질(TNF-α)에만 <b>특이적으로 결합</b>하여 그 작용을 막는다 — 단클론항체의 특징이다. 105쪽에서도 류머티즘성 관절염 치료제로 쓰이는 항체를 소개하였다(2쪽 ⑨).',
+    hint:'「선택적으로」 한 가지 물질에만 결합하는 것은 어느 기술인가?' },
+  { id:'c2', title:'사례 2 · 골관절염',
+    t:'골관절염 환자의 손상된 <b>연골 부위에 줄기세포를 주사</b>하면, 줄기세포에서 분비된 화학 물질이 염증을 줄이고 연골의 재생을 촉진한다.',
+    a:'stem',
+    why:'줄기세포는 분화할 수 있는 미분화 세포로, 손상된 조직의 회복에 쓰인다(3쪽 ⑩). 어떤 줄기세포를 쓰느냐에 따라 생명윤리 문제·면역 거부반응이 달라진다(⑪).',
+    hint:'환자의 몸에 직접 넣어 주는 것이 무엇인지 보시오.' },
+  { id:'c3', title:'사례 3 · 낫모양적혈구빈혈증',
+    t:'환자로부터 혈액을 생성하는 줄기세포를 얻은 뒤 <b>크리스퍼 유전자 가위로 질병 유전자를 교정</b>하고, 이 줄기세포를 다시 환자에게 주입하여 정상 헤모글로빈을 포함한 적혈구를 생성하도록 한다. 미국 식품의약국(FDA)의 승인을 받았다.',
+    a:'edit',
+    why:'질병의 원인인 돌연변이를 가이드 RNA로 찾아 Cas9으로 자르고 수선하여 <b>유전자를 복구</b>한다(4쪽 ⑫에서 다룬 바로 그 돌연변이이다). 교정한 세포가 혈액 <b>줄기세포</b>이므로 두 기술이 함께 쓰였다.',
+    hint:'질병의 원인 자체(유전자)를 고치는 기술은 무엇인가?' }
+];
+function caseBy(id){ var c = null; CASES.forEach(function(x){ if (x.id === id) c = x; }); return c; }
+function techBy(id){ var c = null; TECHS.forEach(function(x){ if (x.id === id) c = x; }); return c; }
+function caseOkCount(){ var n = 0; CASES.forEach(function(c){ if (state.caseOk[c.id]) n++; }); return n; }
+function renderCases(){
+  var h = '';
+  CASES.forEach(function(c){
+    var ok = !!state.caseOk[c.id];
+    h += '<div class="qwrap"' + (ok ? ' style="border-color:var(--green);background:var(--green-bg);"' : '') + '><div class="qh" style="padding-left:0;text-indent:0;">' + c.title + (ok ? ' ✅' : '') + '</div>' +
+         '<p style="margin:6px 0 4px;line-height:1.75;">' + c.t + '</p><div class="chiprow">';
+    TECHS.forEach(function(tc){
+      h += '<button type="button" class="pchip gene' + (ok && c.a === tc.id ? ' on' : '') + '" onclick="casePick(&#39;' + c.id + '&#39;,&#39;' + tc.id + '&#39;)">' + tc.name + '</button>';
+    });
+    h += '</div>' + (ok ? '<div class="ansbox" style="display:block;"><b>원리</b> — ' + c.why + '</div>' : '') + '</div>';
+  });
+  setHTML('caseBox', h);
+  var t = document.getElementById('caseProg'); if (t) t.textContent = '연결한 사례 ' + caseOkCount() + ' / 3';
+}
+function casePick(cid, tid){
+  var c = caseBy(cid), tc = techBy(tid);
+  if (!c || !tc) return;
+  if (c.a === tid){
+    state.caseOk[cid] = true;
+    showFb('fb_case', 'good', '✅ 옳다. ' + c.title + '에는 <b>' + tc.name + '</b>이 쓰였다.' + (caseOkCount() === 3 ? ' 세 사례를 모두 연결하였다. 아래 💪 문항과 정리하기로 넘어가시오.' : ''));
+    saveState();
+  } else {
+    showFb('fb_case', 'bad', '❌ 옳지 않다. ' + c.title + ' — ' + c.hint);
+  }
+  renderCases(); updateAll();
+}
+
 /* 단계 막대 정의 */
 STG.lig = { last:3, steps:LG_STEP, capOf:ligCap, cap:'lg_cap', prog:'ligProg', fb:'fb_lig', seen:'ligSeen', render:renderLig,
   done:function(){ return state.ligFrag === 'A'; },
@@ -2474,11 +2563,85 @@ var Q_CR = [
         '옳지 않다. 절단된 DNA는 세포가 수선한다. 그 과정에서 유전자가 복구된다.'],
     ex:'가이드 RNA = 자리를 찾는 길잡이 · <b>Cas9 = 특정 염기서열을 자르는 핵산분해효소</b>(107쪽).' }
 ];
-var PRACTICE = [];   /* 💪 더 풀어 보기 — 5쪽(종합)에서 채운다 */
 
-/* ══════════════════ 14. 정리하기 — 5쪽(종합)에서 채운다 ══════════════════ */
-var WRITEQ = [];
-var SELFCHECK = [];
+
+var PRACTICE = [
+  { id:'p1', lv:'중',
+    q:'인슐린 유전자를 넣은 플라스미드를 대장균에 넣고 앰피실린 + X-gal + 유도 물질이 든 배지에서 키웠더니, 파란 군체 20개와 흰 군체 7개가 자랐다. 인슐린 유전자가 들어간 재조합 플라스미드를 가진 군체는 몇 개인가?',
+    ch:['0개', '20개', '7개', '27개'],
+    a:2,
+    no:['옳지 않다. 흰 군체는 lacZ가 끊긴 것이므로 재조합 플라스미드를 가진다.',
+        '옳지 않다. 파란 군체는 lacZ가 온전하여 X-gal을 분해한 것 — 빈 플라스미드이다.',
+        '',
+        '옳지 않다. 자란 27개는 모두 플라스미드를 받았지만(앰피실린 저항성), 그중 파란 20개는 빈 플라스미드이다.'],
+    ex:'앰피실린 배지에서 자랐다 = 플라스미드를 받았다(27개). 그중 <b>흰색</b> = 인슐린 유전자가 <i>lacZ</i>를 끊었다 = 재조합(<b>7개</b>). 파란색 = 빈 플라스미드(20개). (1쪽 ④ · ⑤)' },
+  { id:'p2', lv:'중',
+    q:'코로나바이러스감염증 자가진단 키트가 임신 진단 키트와 같은 원리라면, 검사선에 고정된 항체는 무엇에 결합하는 항체인가?',
+    ch:['발색 물질에 결합하는 항체',
+        '코로나바이러스 항원의 다른 부분에 결합하는 항체',
+        '사람의 hCG에 결합하여 임신 여부까지 함께 알려 주는 항체',
+        '대조선에 고정된 항체에 결합하여 대조선의 색을 더 진하게 만드는 항체'],
+    a:1,
+    no:['옳지 않다. 발색 물질은 이동하는 항체에 붙어 있는 표지일 뿐이다.',
+        '',
+        '옳지 않다. hCG는 임신 진단 키트가 찾는 물질이다. 코로나 키트가 찾는 것은 바이러스 항원이다.',
+        '옳지 않다. 대조선은 남은 이동 항체를 붙잡는 곳이다.'],
+    ex:'임신 진단 키트의 검사선 = <b>hCG의 다른 부분</b>에 결합하는 항체. 같은 원리로 코로나 키트의 검사선은 <b>바이러스 항원의 다른 부분</b>에 결합하는 단클론항체이다(105쪽 · 2쪽 ⑧).' },
+  { id:'p3', lv:'상',
+    q:'환자 자신에게 이식하였을 때 면역 거부반응이 일어나지 않을 것으로 기대되는 줄기세포를 모두 고른 것은?',
+    ch:['환자의 체세포 핵으로 만든 체세포복제 배아줄기세포와, 환자의 체세포로 만든 유도 만능 줄기세포',
+        '다른 사람의 골수에서 얻은 성체줄기세포만',
+        '환자의 체세포로 만든 유도 만능 줄기세포만',
+        '다른 사람의 골수에서 얻은 성체줄기세포와, 환자의 체세포를 역분화시켜 실험실에서 만든 유도 만능 줄기세포'],
+    a:0,
+    no:['',
+        '옳지 않다. 다른 사람의 세포는 면역 적합성이 맞지 않으면 거부반응이 일어날 수 있다.',
+        '옳지 않다. 환자의 체세포 핵을 쓴 체세포복제 배아줄기세포도 「면역 거부반응이 없는 맞춤형」이다(106쪽).',
+        '옳지 않다. 다른 사람의 골수에서 얻은 줄기세포는 환자 자신의 세포가 아니다.'],
+    ex:'면역 거부반응을 정하는 것은 <b>그 세포의 유전자가 누구의 것인가</b>이다. 환자의 체세포 <b>핵</b>을 쓴 체세포복제 배아줄기세포와 환자의 <b>체세포</b>를 역분화시킨 유도 만능 줄기세포는 모두 환자 자신의 유전자를 가진다(106쪽 · 3쪽 ⑪).',
+    hint:['⑪의 문장 가운데 「면역 거부반응」이 나온 문장은 어느 줄기세포의 것이었는가?',
+          '체세포복제 배아줄기세포의 핵은 누구의 체세포에서 왔는가?'] },
+  { id:'p4', lv:'상',
+    q:'DNA 재조합기술의 제한효소와 크리스퍼 – 캐스9 유전자 가위를 비교한 설명으로 옳은 것은?',
+    ch:['제한효소는 DNA를 자르지 못하고, Cas9만 DNA를 자를 수 있다.',
+        '둘 다 가이드 RNA가 있어야 자를 자리를 찾을 수 있다.',
+        '제한효소는 실험할 때마다 원하는 어떤 서열이든 바꾸어 인식할 수 있지만, 유전자 가위는 처음부터 정해진 한 가지 서열만 자른다.',
+        '둘 다 DNA를 자르지만, 제한효소는 정해진 염기서열을 인식하고 유전자 가위는 가이드 RNA가 정하는 자리를 자른다.'],
+    a:3,
+    no:['옳지 않다. 제한효소도 특정한 염기서열 부위의 DNA를 자른다(103쪽).',
+        '옳지 않다. 제한효소는 가이드 RNA 없이 자기가 인식하는 염기서열(예: GAATTC)을 찾는다.',
+        '옳지 않다. 반대이다. 제한효소마다 인식 서열은 정해져 있고, 유전자 가위는 가이드 RNA를 바꾸면 원하는 자리를 자를 수 있다.',
+        ''],
+    ex:'제한효소 Ⓐ는 언제나 <b>GAATTC</b>만 자른다(1쪽 ①). 유전자 가위는 <b>가이드 RNA의 서열을 바꾸면</b> 원하는 유전자의 원하는 자리를 자를 수 있다(4쪽 ⑫). 그래서 유전자 편집이 「정확하고 효율적」이다(107쪽).',
+    hint:['1쪽 ①의 제한효소 Ⓐ와 Ⓑ는 각각 무엇을 인식하였는가? 4쪽 ⑫에서 자를 자리를 정한 것은 무엇이었는가?',
+          '자를 자리를 「바꿀 수 있는」 쪽은 어느 것인가?'] }
+];
+
+/* ══════════════════ 14. ⑭ 정리하기 ══════════════════ */
+var WRITEQ = [
+  { id:'w1', min:60,
+    q:'DNA 재조합기술로 대장균에서 인슐린을 대량으로 생산하는 과정을 서술하시오.',
+    need:['제한효소와 DNA 연결효소', '플라스미드(DNA 운반체)', '형질 전환체의 선별', '증식'],
+    ans:'사람의 인슐린 유전자와 플라스미드를 같은 제한효소로 잘라 상보적인 말단을 만들고, DNA 연결효소로 이어 재조합 DNA를 만든다. 이것을 대장균에 넣은 뒤, 앰피실린과 X-gal이 든 배지에서 흰 군체를 골라 재조합 플라스미드를 가진 형질 전환체를 선별한다. 이 대장균을 증식시키면 같은 세포가 많아지고, 각 세포가 인슐린을 만들어 인슐린을 대량으로 얻을 수 있다.' },
+  { id:'w2', min:50,
+    q:'단클론항체를 만드는 방법을 서술하고, 그 쓰임을 한 가지 쓰시오.',
+    need:['B림프구와 골수암 세포의 융합', '잡종세포의 분리 배양', '쓰임 한 가지'],
+    ans:'항원을 주입한 동물에서 얻은 B림프구와 계속 분열하는 골수암 세포를 융합하여 잡종세포를 만든다. 잡종세포를 분리 배양하면 한 종류의 항체, 곧 단클론항체를 대량으로 얻을 수 있다. 단클론항체는 hCG에 결합하는 성질을 이용한 임신 진단 키트에 쓰인다.' },
+  { id:'w3', min:50,
+    q:'세 가지 줄기세포 가운데 하나를 골라, 얻는 방법과 장점·한계를 서술하시오.',
+    need:['얻는 방법', '장점', '한계'],
+    ans:'유도 만능 줄기세포는 성체의 체세포에 역분화를 일으키는 유전자를 삽입하여 얻는다. 난자를 쓰지 않고 환자 자신의 세포를 쓰므로 생명윤리 문제로부터 자유롭고 면역 거부반응이 없다. 그러나 체세포를 역분화시키는 과정에서 유전자 변이가 일어날 수 있다.' },
+  { id:'w4', min:80,
+    q:'[창의] 이 활동에서 다룬 생명공학기술 하나를 골라, 그 원리를 설명하고 그 기술을 쓸 때 생명윤리적으로 따져 보아야 할 점을 자신의 판단과 함께 서술하시오.',
+    need:['고른 기술의 원리', '생명윤리 쟁점', '자신의 판단과 그 근거'],
+    ans:'(예시) 크리스퍼 – 캐스9 유전자 가위는 교정하려는 DNA와 상보적인 가이드 RNA가 표적을 찾고, Cas9 단백질이 그 자리를 잘라 수선하게 하는 기술이다. 낫모양적혈구빈혈증처럼 원인 유전자가 분명한 병을 치료할 수 있다. 그러나 같은 기술로 생식세포나 배아의 유전자를 바꾸면 그 변화가 자손에게 전해지고, 질병 치료가 아닌 형질 개량에 쓰일 수도 있다. 나는 환자 본인의 체세포를 치료하는 데에는 쓰되, 자손에게 전해지는 편집은 안전성이 확인되고 충분한 사회적 합의가 이루어지기 전까지 하지 않아야 한다고 판단한다(107쪽 「생명윤리 측면의 문제」).' }
+];
+var SELFCHECK = [
+  { id:'s1', k:'지식·이해', t:'DNA 재조합기술 · 단클론항체 · 줄기세포 · 유전자 편집 기술의 원리를 설명할 수 있는가?' },
+  { id:'s2', k:'과정·기능', t:'난치병 치료 사례에 적용된 생명공학기술의 원리를 정리하였는가?' },
+  { id:'s3', k:'가치·태도', t:'생명공학기술을 이용한 난치병 치료의 전망과 생명윤리 문제를 함께 생각해 보았는가?' }
+];
+
 
 /* ══════════════════ 15. 문항 엔진 ══════════════════
    ★답은 몇 번이든 고칠 수 있다. 정오는 기록하지 않는다 — 마지막 선택만 화면 복원용으로 저장한다. */
@@ -2712,9 +2875,13 @@ var SEC_DEF = {
   sort3: { qs:function(){ return []; },      ask:false, fb:'fb_sort3', msg:'⑪의 분류를 모두 지웠다.',
            run:function(){ state.factOk = {}; } },
   cr:    { qs:function(){ return Q_CR; },    ask:false, fb:'fb_cr',    msg:'⑫를 처음 단계로 되돌리고 고른 가이드 RNA와 문항을 지웠다.',
-           run:function(){ state.crGuide = ''; state.crTried = {}; state.crSeen = false; PH.cr = 0; } }
+           run:function(){ state.crGuide = ''; state.crTried = {}; state.crSeen = false; PH.cr = 0; } },
+  case:  { qs:function(){ return []; },      ask:false, fb:'fb_case',  msg:'⑬의 연결을 모두 지웠다.',
+           run:function(){ state.caseOk = {}; } },
+  prac:  { prac:true,  ask:false, fb:'', msg:'💪의 문항을 지웠다.' },
+  write: { write:true, ask:true,  fb:'', msg:'⑭에 적은 답안과 자기평가를 지웠다.' }
 };
-var SEC_ASK = {};
+var SEC_ASK = { write:'⑭에 적은 답안을 모두 지우고 이 단계만 다시 하시겠습니까? (다른 단계는 그대로 둔다)' };
 function resetSec(key){
   var d = SEC_DEF[key];
   if (!d) return;
@@ -2789,6 +2956,7 @@ function restoreUI(){
   renderStem();
   renderSort3();
   renderCr();
+  renderCases();
   legendFill();
   renderQuizInto(Q_INTRO, 'introQ', 'gene');
   renderQuizInto(Q_CUT,   'cutQ',   'plas');
@@ -2828,7 +2996,7 @@ function init(){
       else if (typeof sv === typeof state[k]){ state[k] = sv; }
     });
   }
-  ['ligTried', 'lacDrop', 'medSeen', 'mabTry', 'kitOk', 'stemSeen', 'factOk', 'crTried', 'qPick', 'pPick', 'ta', 'self'].forEach(function(k){
+  ['ligTried', 'lacDrop', 'medSeen', 'mabTry', 'kitOk', 'stemSeen', 'factOk', 'crTried', 'caseOk', 'qPick', 'pPick', 'ta', 'self'].forEach(function(k){
     if (!state[k] || typeof state[k] !== 'object' || Array.isArray(state[k])) state[k] = {};
   });
   /* ★범위 밖의 값·없는 이름은 걸러 낸다 */
@@ -2846,6 +3014,7 @@ function init(){
   if (!pc || state.medium !== 'xgal' || colonyLook(pc.kind, 'xgal').color !== 'white') state.picked = '';
   ['ligSeen', 'lacSeen', 'selSeen', 'insSeen', 'mabSeen', 'kitSeen', 'adcSeen', 'stemAny', 'crSeen'].forEach(function(k){ state[k] = (state[k] === true); });
   if (!guideBy(state.crGuide)) state.crGuide = '';
+  Object.keys(state.caseOk).forEach(function(k){ if (!caseBy(k) || state.caseOk[k] !== true) delete state.caseOk[k]; });
   Object.keys(state.crTried).forEach(function(k){ if (!guideBy(k) || state.crTried[k] !== true) delete state.crTried[k]; });
   if (!stemRowBy(state.stemSel)) state.stemSel = '';
   Object.keys(state.stemSeen).forEach(function(k){ if (!stemRowBy(k) || state.stemSeen[k] !== true) delete state.stemSeen[k]; });

@@ -2151,8 +2151,8 @@ function crSvg(){
     if (i < CR.cut){ tL += tb; bL += bb; } else { tR += tb; bR += bb; }
   }
   h += txt('', 20, 30, '표적 DNA — 낫모양적혈구빈혈증 유전자의 일부', 15, C_PLAS_INK, '', '800');
-  h += txt('cr_mutT', CR.x0 + CR_MUT_I * CR.w + CR.w / 2, 60, '돌연변이(정상은 A)', 13, C_INK, 'middle', '800', ' class="rfade"');
-  h += txt('cr_fixT', CR.x0 + CR_MUT_I * CR.w + CR.w / 2, 60, '정상 서열로 복구', 13.5, C_GREEN, 'middle', '800', ' opacity="0" class="rfade"');
+  h += txt('cr_mutT', CR.x0 + CR_MUT_I * CR.w + CR.w / 2, 42, '돌연변이(정상은 A)', 13, C_INK, 'middle', '800', ' class="rfade"');
+  h += txt('cr_fixT', CR.x0 + CR_MUT_I * CR.w + CR.w / 2, 42, '정상 서열로 복구', 13.5, C_GREEN, 'middle', '800', ' opacity="0" class="rfade"');
   h += '<g id="cr_t" class="rmove" transform="translate(0,0)">' + txt('', CR.x0 - 10, CR.yt + 20, "5'", 14, C_SUB, 'end', '700') + txt('', CR.x0 + 12 * CR.w + 10, CR.yt + 20, "3'", 14, C_SUB, '', '700') +
        '<g id="cr_tL" class="rmove" transform="translate(0,0)">' + tL + '</g><g id="cr_tR" class="rmove" transform="translate(0,0)">' + tR + '</g></g>';
   h += txt('', CR.x0 - 10, CR.yb + 20, "3'", 14, C_SUB, 'end', '700') + txt('', CR.x0 + 12 * CR.w + 10, CR.yb + 20, "5'", 14, C_SUB, '', '700');

@@ -204,6 +204,17 @@ svg.stage{display:block;width:100%;min-width:560px;height:auto;touch-action:mani
 .pchip.gene.on{background:var(--gene);color:#fff;}
 .pchip.lacz{border-color:var(--lacz);color:var(--lacz-ink);}
 .pchip.lacz.on{background:var(--lacz);color:#fff;}
+/* ③-1 */
+.lxq{font-size:16px;font-weight:700;margin:4px 0 6px;line-height:1.6;}
+.lxdone{font-size:15px;line-height:1.8;margin:0 0 6px;}
+.lxsc{border:1.5px solid var(--line);border-radius:12px;background:#fff;padding:10px 12px;margin:6px 0;}
+.lxsc .row{margin:3px 0;font-size:15.5px;line-height:1.6;}
+.lxpill{display:inline-block;border-radius:999px;padding:2px 10px;margin:2px 4px 2px 0;font-size:14.5px;font-weight:800;border:1.5px solid;}
+.lxpill.y{background:#E8F5E9;border-color:#2A7A38;color:#1B5E20;}
+.lxpill.n{background:#F4F6F9;border-color:#B0B7C3;color:#6B7280;text-decoration:line-through;}
+.lxstat{font-size:14.5px;color:var(--sub);font-weight:700;margin:6px 0;}
+.pchip.right{background:#2A7A38;border-color:#2A7A38;color:#fff;}
+.pchip.wrong{background:#FDECEA;border-color:#D32F2F;color:#B71C1C;}
 
 /* ── 표 ── */
 .tblwrap{overflow-x:auto;margin-top:12px;}
@@ -510,6 +521,31 @@ html:not(.unlocked) #draftGate{display:flex;}
       </div>
     </div>
     <div class="secreset"><button type="button" onclick="resetSec('lac')">↻ ③ 처음 단계로 되돌리기</button></div>
+  </div>
+
+  <!-- ══ ③-1 lacZ · β-갈락토시데이스 · X-gal 관계 외우기 (교사 11-11 「무조건 애들 알아야 한다 · 제대로 외울 수 있게」) ══ -->
+  <div class="card split" id="cardLx" data-hub-card="s3x">
+    <div class="hd">
+      <h2 class="lacz">③-1 <i>lacZ</i> · β-갈락토시데이스 · X-gal — 관계 외우기와 색 연습</h2>
+      <span class="tag" id="lxProg">사슬 0 / 6 · 응용 연속 0 / 6</span>
+    </div>
+    <div class="panes">
+      <div class="pane-l">
+        <div class="stage-wrap"><svg class="stage" id="lxStage" viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg" role="img"
+             aria-label="lacZ가 전사·번역되어 β-갈락토시데이스가 되고, 이 효소가 X-gal을 분해하면 파란 색소가 생기는 사슬이다."></svg></div>
+        <div class="anicap lacz" id="lx_cap"></div>
+      </div>
+      <div class="pane-r">
+        <div class="pr-do">
+          <div class="goal"><b>🎯 이 단계의 목적</b><br>④의 청백 선별과 뒤의 문항은 <b><i>lacZ</i> → β-갈락토시데이스 → X-gal → 파란 색소</b>의 사슬만 확실히 알면 풀린다. 사슬을 외우고, 조건이 바뀔 때 군체의 색을 예측하는 연습을 하시오.</div>
+          <div class="panel"><div class="ptitle">1단계 · 관계 사슬 채우기</div><div id="lxFill"></div></div>
+          <div class="panel"><div class="ptitle">2단계 · 군체 색 예측 연습</div><div id="lxPrac"></div></div>
+          <div class="msg hide" id="fb_lx"></div>
+        </div>
+        <div class="pr-q"></div>
+      </div>
+    </div>
+    <div class="secreset"><button type="button" onclick="resetSec('lx')">↻ ③-1 다시 하기</button></div>
   </div>
 
   <!-- ══ ④ 청백 선별 원리 ══ -->
@@ -1017,6 +1053,10 @@ function freshState(){
     ligSeen:false,     /* ② A로 마지막 국면까지 보았는가 */
     lacDrop:{},        /* ③ X-gal을 넣은 시험관 { on:true, off:true } */
     lacSeen:false,
+    lxFill:0,          /* ③-1 채운 빈칸 수 */
+    lxChain:false,     /* ③-1 사슬을 한 번이라도 완성 */
+    lxMode:'base',     /* ③-1 연습 단계 base | adv */
+    lxTot:0, lxOk:0, lxStreak:0, lxBest:0,
     selSeen:false,
     medium:'',         /* ⑤ 지금 배지 */
     medSeen:{},        /* ⑤ 본 배지 */
@@ -1097,6 +1137,7 @@ var STEPS = [
   { key:'cut',   no:'①', name:'제한효소', sub:'자르기' },
   { key:'lig',   no:'②', name:'DNA 연결효소', sub:'재조합 DNA' },
   { key:'lac',   no:'③', name:'lacZ', sub:'젖당 오페론' },
+  { key:'lx',    no:'③-1', name:'관계 외우기', sub:'색 예측 연습' },
   { key:'sel',   no:'④', name:'청백 선별', sub:'원리 11단계' },
   { key:'plate', no:'⑤', name:'골라내기', sub:'배양 접시' },
   { key:'ins',   no:'⑥', name:'연습 문항', sub:'DNA 재조합 실험' },
@@ -1114,6 +1155,7 @@ function stepDone(k){
   if (k === 'intro') return answeredOf(Q_INTRO, state.qPick) === Q_INTRO.length;
   if (k === 'cut')   return cutCount() === 3 && answeredOf(Q_CUT, state.qPick) === Q_CUT.length;
   if (k === 'lig')   return !!state.ligSeen && answeredOf(Q_LIG, state.qPick) === Q_LIG.length;
+  if (k === 'lx')    return !!state.lxChain && state.lxBest >= LX_GOAL;
   if (k === 'lac')   return !!state.lacSeen && answeredOf(Q_LAC, state.qPick) === Q_LAC.length;
   if (k === 'sel')   return !!state.selSeen && answeredOf(Q_SEL, state.qPick) === Q_SEL.length;
   if (k === 'plate') return medCount() === MEDIA.length && !!state.picked && answeredOf(Q_PLATE, state.qPick) === Q_PLATE.length;
@@ -1610,6 +1652,199 @@ function lacDrop(id){
   saveState(); renderLac(); updateAll();
 }
 
+
+/* ══════════════════ 9-1. ③-1 lacZ · β-갈락토시데이스 · X-gal 관계 외우기 ══════════════════
+   ★교사 11-11 「뒷쪽에 이거 문제 있다 … 무조건 애들 알아야 하네. 제대로 외울 수 있게」
+   1단계 사슬 빈칸 6개 · 2단계 무작위 조건(대장균 3 × 항생제 × X-gal × 젖당 유도체) → 군체 색 예측.
+   ★판정은 lxJudge() 하나. 이 대장균은 플라스미드의 lacZ로만 효소를 만든다(④·⑤와 같은 전제). */
+var LX_GOAL = 6;
+var LX_BLANK = [
+  { mark:'㉠', q:'β-갈락토시데이스를 만드는 <b>유전자</b>는?', a:'lacZ', ch:['항생제 저항성 유전자', 'lacZ', '인슐린 유전자'], show:'<i>lacZ</i>' },
+  { mark:'㉡', q:'유전자에서 효소(단백질)가 만들어지는 <b>과정</b>은?', a:'전사·번역', ch:['복제', '제한효소로 자르기', '전사·번역'], show:'전사·번역' },
+  { mark:'㉢', q:'<i>lacZ</i>가 만드는 <b>효소</b>는?', a:'β-갈락토시데이스', ch:['β-갈락토시데이스', 'DNA 연결효소', '억제단백질'], show:'β-갈락토시데이스' },
+  { mark:'㉣', q:'이 효소가 X-gal에 <b>하는 일</b>은?', a:'분해', ch:['합성', '분해', '연결'], show:'분해' },
+  { mark:'㉤', q:'젖당과 모양이 닮은 <b>무색</b> 물질은?', a:'X-gal', ch:['젖당 유도체', '항생제', 'X-gal'], show:'X-gal (무색)' },
+  { mark:'㉥', q:'X-gal이 분해되면 생기는 것은?', a:'파란 색소', ch:['파란 색소', '흰 색소', '빨간 색소'], show:'파란 색소' }
+];
+var LX_KIND = [
+  { id:'none', name:'플라스미드를 받지 못한 대장균', note:'항생제 저항성 유전자 ✕ · <i>lacZ</i> ✕' },
+  { id:'emp',  name:'빈 플라스미드를 받은 대장균', note:'항생제 저항성 유전자 ○ · <i>lacZ</i> 온전' },
+  { id:'rec',  name:'재조합 플라스미드를 받은 대장균', note:'항생제 저항성 유전자 ○ · <i>lacZ</i> 끊김' }
+];
+var LX_ANS = [{ id:'dead', t:'자라지 못한다' }, { id:'white', t:'흰색' }, { id:'blue', t:'파란색' }];
+var LXCUR = null, LXANS = '';     /* 지금 문제 · 고른 답 — 화면에만 쓴다 */
+/* ★판정 */
+function lxJudge(sc){
+  if (sc.anti && sc.kind === 'none') return 'dead';
+  var enz = (sc.kind === 'emp') && sc.ind;
+  return (enz && sc.xgal) ? 'blue' : 'white';
+}
+/* 사슬이 끊긴 자리 — 왼쪽 그림의 ✕ */
+function lxBreaks(sc){
+  var b = { dead:false, gene:'', tx:false, sub:false };
+  if (lxJudge(sc) === 'dead'){ b.dead = true; return b; }
+  if (sc.kind === 'none') b.gene = 'lacZ 없음';
+  else if (sc.kind === 'rec') b.gene = 'lacZ 끊김';
+  else if (!sc.ind) b.tx = true;
+  if (!sc.xgal) b.sub = true;
+  return b;
+}
+function lxWhy(sc){
+  var r = lxJudge(sc);
+  if (r === 'dead') return '플라스미드가 없어 항생제 저항성 유전자가 없다 → 항생제에 죽는다 → <b>군체가 생기지 않는다</b>.';
+  var h = (sc.anti ? '항생제 저항성 유전자가 있어 자란다. ' : '배지에 항생제가 없어 자란다. ');
+  var enz = false;
+  if (sc.kind === 'none') h += '<i>lacZ</i>가 <b>없다</b> → β-갈락토시데이스 ✕ → ';
+  else if (sc.kind === 'rec') h += '인슐린 유전자가 끼어들어 <i>lacZ</i>가 <b>끊겼다</b> → β-갈락토시데이스 ✕ → ';
+  else if (!sc.ind) h += '젖당 유도체가 없어 억제단백질이 작동부위를 막는다 → <i>lacZ</i> <b>전사 ✕</b> → β-갈락토시데이스 ✕ → ';
+  else { h += '<i>lacZ</i> 온전 + 젖당 유도체 → 전사·번역 → <b>β-갈락토시데이스 ○</b> → '; enz = true; }
+  if (enz) h += sc.xgal ? 'X-gal을 <b>분해</b> → 파란 색소 → <b>파란색</b>.' : '그러나 분해할 <b>X-gal이 없다</b> → <b>흰색</b>.';
+  else h += sc.xgal ? 'X-gal이 분해되지 않는다 → <b>흰색</b>.' : '(X-gal도 없다) → <b>흰색</b>.';
+  return h;
+}
+function lxNew(){
+  var target = LX_ANS[Math.floor(Math.random() * 3)].id, sc = null, tries = 0;
+  if (state.lxMode === 'base' && target === 'dead' && Math.random() < 0.5) target = 'white';
+  do {
+    var kinds = ['none', 'emp', 'rec'];
+    sc = { kind:kinds[Math.floor(Math.random() * 3)], anti:Math.random() < 0.6,
+           xgal:state.lxMode === 'base' ? true : Math.random() < 0.6,
+           ind:state.lxMode === 'base' ? true : Math.random() < 0.6 };
+    tries++;
+  } while (tries < 200 && (lxJudge(sc) !== target || (LXCUR && JSON.stringify(sc) === JSON.stringify(LXCUR))));
+  LXCUR = sc; LXANS = '';
+}
+/* 그림 — 사슬 */
+var LX_POS = [
+  { box:[24, 56, 210, 64] }, { lab:[315, 76] }, { box:[420, 56, 276, 64] },
+  { lab:[600, 160] }, { box:[420, 182, 276, 64] }, { box:[24, 182, 210, 64] }
+];
+function lxSvg(){
+  var h = '';
+  h += txt('', 360, 30, '젖당 유도체가 억제단백질을 떼어 내야 ㉠이 전사된다(③)', 14, C_SUB, 'middle', '700');
+  h += arrow(238, 88, 412, 88, C_LACZ, 3) + arrow(558, 124, 558, 176, C_LACZ, 3) + arrow(414, 214, 240, 214, C_XBLUE, 3);
+  LX_POS.forEach(function(q, i){
+    if (q.box){
+      var b = q.box, fill = i === 0 ? C_LACZ : (i === 2 ? C_LACZ_BG : (i === 4 ? '#FFFFFF' : C_XBLUE));
+      h += '<rect id="lx_b' + i + '" x="' + b[0] + '" y="' + b[1] + '" width="' + b[2] + '" height="' + b[3] + '" rx="12" fill="' + fill + '" stroke="' + (i === 4 ? '#78909C' : 'none') + '" stroke-width="2" class="rfade"/>';
+      h += txt('lx_s' + i, b[0] + b[2] / 2, b[1] + 40, '', 19, (i === 0 || i === 5) ? '#fff' : C_INK, 'middle', '800');
+    } else {
+      h += '<rect x="' + (q.lab[0] - 62) + '" y="' + (q.lab[1] - 21) + '" width="124" height="30" rx="8" fill="#fff" stroke="' + C_LACZ + '" stroke-width="1.5"/>';
+      h += txt('lx_s' + i, q.lab[0], q.lab[1], '', 16, C_LACZ_INK, 'middle', '800');
+    }
+  });
+  /* 끊긴 자리 표시 */
+  h += '<g id="lx_xg" class="rfade" opacity="0">' + txt('', 206, 102, '✕', 40, '#D32F2F', 'middle', '800') + '</g>';
+  h += txt('lx_xgT', 129, 140, '', 15, '#D32F2F', 'middle', '800', ' class="rfade"');
+  h += '<g id="lx_xt" class="rfade" opacity="0">' + txt('', 325, 112, '✕', 40, '#D32F2F', 'middle', '800') + txt('', 325, 140, '억제단백질이 막음', 14, '#D32F2F', 'middle', '800') + '</g>';
+  h += '<g id="lx_xs" class="rfade" opacity="0">' + txt('', 672, 228, '✕', 40, '#D32F2F', 'middle', '800') + txt('', 558, 268, 'X-gal 없음', 15, '#D32F2F', 'middle', '800') + '</g>';
+  h += '<g id="lx_dead" class="rfade" opacity="0"><rect x="10" y="44" width="700" height="214" rx="14" fill="#ECEFF1" fill-opacity="0.92"/>' +
+       txt('', 360, 150, '✕ 항생제에 죽어 군체가 생기지 않는다', 22, C_INK, 'middle', '800') + '</g>';
+  h += txt('lx_res', 360, 290, '', 16, C_INK, 'middle', '800');
+  return h;
+}
+var MOUNT_LX = false;
+function lxApply(){
+  LX_BLANK.forEach(function(b, i){ setText('lx_s' + i, state.lxFill > i ? '' : b.mark + ' ?'); var el = document.getElementById('lx_s' + i); if (el && state.lxFill > i) el.innerHTML = b.show.replace(/<i>|<\/i>/g, ''); });
+  var sc = (LXCUR && LXANS) ? LXCUR : null, br = sc ? lxBreaks(sc) : { dead:false, gene:'', tx:false, sub:false };
+  fadeTo('lx_xg', br.gene ? 1 : 0); setText('lx_xgT', br.gene);
+  fadeTo('lx_xt', br.tx ? 1 : 0);
+  fadeTo('lx_xs', br.sub ? 1 : 0);
+  fadeTo('lx_dead', br.dead ? 1 : 0);
+  var r = sc ? lxJudge(sc) : '';
+  fadeTo('lx_b5', (!sc || r === 'blue') ? 1 : 0.25);
+  setText('lx_res', sc ? (r === 'blue' ? '→ 군체는 파란색' : (r === 'white' ? '→ 군체는 흰색' : '')) : '');
+}
+function lxCap(){
+  if (LXCUR && LXANS) return lxWhy(LXCUR);
+  if (state.lxFill < LX_BLANK.length) return '오른쪽에서 빈칸을 차례로 채우시오. 채운 칸은 이 그림에 나타난다.';
+  return '<b><i>lacZ</i></b> →(전사·번역)→ <b>β-갈락토시데이스</b> →(분해)→ <b>X-gal</b> → <b>파란 색소</b>. 사슬 가운데 <b>하나라도 끊기면 흰색</b>이다.';
+}
+function renderLx(){
+  if (!MOUNT_LX){ setHTML('lxStage', lxSvg()); MOUNT_LX = true; }
+  /* 1단계 */
+  var f = '';
+  if (state.lxFill < LX_BLANK.length){
+    var b = LX_BLANK[state.lxFill];
+    f += '<div class="lxq">' + b.mark + ' ' + b.q + '</div><div class="chiprow">';
+    b.ch.forEach(function(c, j){ f += '<button type="button" class="pchip lacz" onclick="lxPickBlank(' + j + ')">' + c.replace('lacZ', '<i>lacZ</i>') + '</button>'; });
+    f += '</div><div class="lxstat">빈칸 ' + state.lxFill + ' / ' + LX_BLANK.length + (state.lxChain ? ' · 가리고 다시 채우는 중' : '') + '</div>';
+  } else {
+    f += '<p class="lxdone">✅ <b><i>lacZ</i></b> →(전사·번역)→ <b>β-갈락토시데이스</b> →(분해)→ <b>X-gal</b> → <b>파란 색소</b><br>소리 내어 한 번 읽은 뒤, 가리고 다시 채워 보시오.</p>' +
+         '<div class="btnrow"><button type="button" class="btn ghost" onclick="lxHide()">🙈 가리고 다시 채우기</button></div>';
+  }
+  setHTML('lxFill', f);
+  /* 2단계 */
+  var p = '<div class="chiprow">' +
+          '<button type="button" class="pchip lacz' + (state.lxMode === 'base' ? ' on' : '') + '" onclick="lxSetMode(&#39;base&#39;)">기본<small>X-gal · 젖당 유도체는 늘 들어 있다</small></button>' +
+          '<button type="button" class="pchip lacz' + (state.lxMode === 'adv' ? ' on' : '') + '" onclick="lxSetMode(&#39;adv&#39;)">응용<small>모든 성분이 바뀐다 · 목표 연속 ' + LX_GOAL + '</small></button></div>';
+  if (!LXCUR) lxNew();
+  var sc = LXCUR, k = null; LX_KIND.forEach(function(x){ if (x.id === sc.kind) k = x; });
+  function pill(on, t){ return '<span class="lxpill ' + (on ? 'y' : 'n') + '">' + t + '</span>'; }
+  p += '<div class="lxsc"><div class="row">🦠 <b>' + k.name + '</b> <span style="color:var(--sub);font-size:14px">(' + k.note + ')</span></div>' +
+       '<div class="row">🧫 배지: ' + pill(sc.anti, '항생제') + pill(sc.xgal, 'X-gal') + pill(sc.ind, '젖당 유도체') + '</div>' +
+       '<div class="lxq" style="margin-top:8px">이 대장균의 군체는 어떻게 되는가?</div><div class="chiprow">';
+  var right = lxJudge(sc);
+  LX_ANS.forEach(function(a){
+    var cls = '';
+    if (LXANS){ if (a.id === right) cls = ' right'; else if (a.id === LXANS) cls = ' wrong'; }
+    p += '<button type="button" class="pchip lacz' + cls + '"' + (LXANS ? ' disabled' : '') + ' onclick="lxAnswer(&#39;' + a.id + '&#39;)">' + a.t + '</button>';
+  });
+  p += '</div>';
+  if (LXANS) p += '<div class="btnrow"><button type="button" class="btn" onclick="lxNext()">다음 문제 ▶</button></div>';
+  p += '</div><div class="lxstat">맞힌 수 ' + state.lxOk + ' / 푼 수 ' + state.lxTot + ' · 지금 연속 ' + state.lxStreak + ' · 응용 최고 연속 ' + state.lxBest + ' / ' + LX_GOAL + '</div>';
+  setHTML('lxPrac', p);
+  lxApply();
+  setHTML('lx_cap', lxCap());
+  var t = document.getElementById('lxProg');
+  if (t) t.textContent = '사슬 ' + Math.max(state.lxFill, state.lxChain ? LX_BLANK.length : 0) + ' / ' + LX_BLANK.length + ' · 응용 연속 ' + Math.min(state.lxBest, LX_GOAL) + ' / ' + LX_GOAL;
+}
+function lxPickBlank(j){
+  var b = LX_BLANK[state.lxFill];
+  if (!b || !b.ch[j]) return;
+  if (b.ch[j] === b.a){
+    state.lxFill++;
+    if (state.lxFill === LX_BLANK.length){ state.lxChain = true; showFb('fb_lx', 'good', '✅ 사슬을 완성하였다. 이제 2단계에서 색을 예측하시오.'); }
+    else showFb('fb_lx', 'good', '✅ 옳다. ' + b.mark + ' = <b>' + b.show + '</b>');
+    saveState();
+  } else {
+    showFb('fb_lx', 'bad', '❌ 옳지 않다. ' + b.mark + '에 「' + b.ch[j] + '」는 맞지 않는다. ' + ({
+      0:'β-갈락토시데이스의 유전자는 젖당 오페론의 첫 번째 구조유전자이다.',
+      1:'유전자의 정보로 단백질을 만드는 두 과정이다.',
+      2:'젖당 분해효소의 이름이다.',
+      3:'효소는 X-gal을 잘라 나눈다.',
+      4:'효소가 분해하는 무색의 인공 물질이다.',
+      5:'X-gal이 분해되어 생기는 색소의 색이다.'
+    })[state.lxFill]);
+  }
+  renderLx(); updateAll();
+}
+function lxHide(){ state.lxFill = 0; showFb('fb_lx', 'info', '🙈 사슬을 가렸다. 보지 않고 다시 채우시오.'); saveState(); renderLx(); updateAll(); }
+function lxSetMode(m){
+  if (m !== 'base' && m !== 'adv') return;
+  state.lxMode = m; state.lxStreak = 0; LXCUR = null; LXANS = '';
+  showFb('fb_lx', 'info', m === 'adv' ? '응용 단계이다. 항생제 · X-gal · 젖당 유도체가 모두 바뀐다. 연속 ' + LX_GOAL + '문제를 맞히시오.' : '기본 단계이다. X-gal과 젖당 유도체는 늘 들어 있다.');
+  saveState(); renderLx(); updateAll();
+}
+function lxAnswer(id){
+  if (!LXCUR || LXANS) return;
+  var ok = false; LX_ANS.forEach(function(a){ if (a.id === id) ok = true; });
+  if (!ok) return;
+  LXANS = id;
+  var right = lxJudge(LXCUR);
+  state.lxTot++;
+  if (id === right){
+    state.lxOk++; state.lxStreak++;
+    if (state.lxMode === 'adv' && state.lxStreak > state.lxBest) state.lxBest = state.lxStreak;
+    showFb('fb_lx', 'good', '✅ 옳다. ' + lxWhy(LXCUR) + (state.lxMode === 'adv' && state.lxStreak === LX_GOAL ? ' 🎉 응용 ' + LX_GOAL + '문제를 연속으로 맞혔다.' : ''));
+  } else {
+    state.lxStreak = 0;
+    showFb('fb_lx', 'bad', '❌ 옳지 않다. ' + lxWhy(LXCUR) + ' 왼쪽 사슬에서 끊긴 자리(✕)를 확인하시오.');
+  }
+  if (typeof window !== 'undefined' && window.hubTrack) window.hubTrack('s3x', 'lx', id === right ? 'ok' : 'no');
+  saveState(); renderLx(); updateAll();
+}
+function lxNext(){ lxNew(); showFb('fb_lx', '', ''); renderLx(); }
 
 /* ══════════════════ 10. ④ 청백 선별 원리 ══════════════════
    ★한 국면에 한 사건. 판정(살아남는가·색)은 colonyLook()에서 가져온다. */
@@ -3090,6 +3325,8 @@ var SEC_DEF = {
            run:function(){ state.ligFrag = ''; state.ligTried = {}; state.ligSeen = false; PH.lig = 0; } },
   lac:   { qs:function(){ return Q_LAC; },   ask:false, fb:'fb_lac',   msg:'③을 처음 단계로 되돌리고 시험관과 문항을 지웠다.',
            run:function(){ state.lacDrop = {}; state.lacSeen = false; PH.lac = 0; } },
+  lx:    { qs:function(){ return []; },      ask:false, fb:'fb_lx',    msg:'③-1의 사슬과 연습 기록을 지웠다.',
+           run:function(){ state.lxFill = 0; state.lxChain = false; state.lxMode = 'base'; state.lxTot = 0; state.lxOk = 0; state.lxStreak = 0; state.lxBest = 0; LXCUR = null; LXANS = ''; } },
   sel:   { qs:function(){ return Q_SEL; },   ask:false, fb:'fb_sel',   msg:'④를 처음 단계로 되돌리고 문항을 지웠다.',
            run:function(){ state.selSeen = false; PH.sel = 0; } },
   plate: { qs:function(){ return Q_PLATE; }, ask:false, fb:'fb_plate', msg:'⑤의 배지와 고른 군체, 문항을 지웠다.',
@@ -3182,6 +3419,7 @@ function restoreUI(){
   renderCut();
   renderLig();
   renderLac();
+  renderLx();
   renderSel();
   renderPlate();
   renderIns();
@@ -3249,6 +3487,10 @@ function init(){
   if (!pc || state.medium !== 'xgal' || colonyLook(pc.kind, 'xgal').color !== 'white') state.picked = '';
   ['ligSeen', 'lacSeen', 'selSeen', 'insSeen', 'mabSeen', 'kitSeen', 'adcSeen', 'stemAny', 'crSeen'].forEach(function(k){ state[k] = (state[k] === true); });
   if (!guideBy(state.crGuide)) state.crGuide = '';
+  ['lxFill', 'lxTot', 'lxOk', 'lxStreak', 'lxBest'].forEach(function(k){ var v = state[k]; state[k] = (typeof v === 'number' && v >= 0 && v < 100000) ? Math.floor(v) : 0; });
+  if (state.lxFill > LX_BLANK.length) state.lxFill = LX_BLANK.length;
+  state.lxChain = (state.lxChain === true);
+  if (state.lxMode !== 'base' && state.lxMode !== 'adv') state.lxMode = 'base';
   Object.keys(state.caseOk).forEach(function(k){ if (!caseBy(k) || state.caseOk[k] !== true) delete state.caseOk[k]; });
   Object.keys(state.crTried).forEach(function(k){ if (!guideBy(k) || state.crTried[k] !== true) delete state.crTried[k]; });
   if (!stemRowBy(state.stemSel)) state.stemSel = '';

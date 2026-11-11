@@ -495,7 +495,6 @@ html:not(.unlocked) #draftGate{display:flex;}
               <li><i>lacZ</i> · <i>lacY</i> · <i>lacA</i> — 교과서 그림 Ⅱ-9의 유전자 1 · 2 · 3의 이름이다. 유전자 이름은 <b>기울여</b> 쓴다.</li>
               <li><b>β-갈락토시데이스</b> — <i>lacZ</i>가 만드는 젖당 분해효소의 이름이다.</li>
               <li><b>X-gal</b> — 젖당과 모양이 닮은 무색의 인공 물질이다. 분해되면 파란 색소가 생긴다.</li>
-              <li><b>유도 물질</b> — 실험에서는 IPTG를 쓴다. 젖당 유도체처럼 억제단백질에 결합한다.</li>
             </ul>
           </div>
           <div class="msg hide" id="fb_lac"></div>
@@ -944,7 +943,7 @@ var KINDS = [
 var MEDIA = [
   { id:'plain', name:'일반 배지', sub:'항생제 없음' },
   { id:'amp',   name:'항생제 배지', sub:'예시 1' },
-  { id:'xgal',  name:'항생제 + X-gal 배지', sub:'예시 2 · 유도 물질 포함' }
+  { id:'xgal',  name:'항생제 + X-gal 배지', sub:'예시 2 · 젖당 유도체 포함' }
 ];
 function hasAmpR(kind){ return kind === 'emp' || kind === 'rec'; }
 function lacZIntact(kind){ return kind === 'emp'; }          /* 숙주의 lacZ는 고장 · rec는 lacZ가 끊김 */
@@ -1534,11 +1533,16 @@ function lacSvg(){
     if (s.name) h += txt('lc_n' + s.id, s.x + s.w / 2, y + 60, s.name, 17, (s.id === 'Z' ? C_LACZ_INK : C_INK), 'middle', '800', ' font-style="italic" opacity="0" class="rfade"');
   });
   h += txt('lc_lac', 600, y + 60, 'lac = 젖당', 14, C_SUB, '', '700', ' opacity="0" class="rfade"');
-  /* 억제단백질 · 유도 물질 */
+  /* RNA 중합효소 — 억제단백질이 떠난 뒤 프로모터에 붙는다(전사하는 것은 이것이다) */
+  h += '<g id="lc_pol" class="rfade" opacity="0"><ellipse cx="78" cy="50" rx="36" ry="15" fill="#90A4AE"/>' + txt('', 78, 26, 'RNA 중합효소', 13.5, '#455A64', 'middle', '800') + '</g>';
+  /* 억제단백질 · 젖당 유도체 — ★교사 11-11 「옆으로 옮겨 가니 전사하는 애 같다」 → 제자리에서 모양이 바뀌고(④) 떨어져 사라진다(⑤) */
   h += '<g id="lc_rep" class="rmove" opacity="0" transform="translate(151,52)">' +
-       '<path d="M-30,10 q0,-26 30,-26 q30,0 30,26 l-8,0 l0,-8 l-10,0 l0,8 l-24,0 l0,-8 l-10,0 l0,8 z" fill="#7E57C2"/>' +
-       '<g id="lc_ind" class="rfade" opacity="0"><polygon points="0,-30 9,-21 0,-12 -9,-21" fill="#43A047" stroke="#fff" stroke-width="1.5"/></g></g>';
-  h += '<g id="lc_indT" class="rfade" opacity="0">' + txt('', 660, 74, '억제단백질', 13, '#5E35B1', 'middle', '800') + txt('', 660, 91, '+ 유도 물질', 13, '#2E7D32', 'middle', '800') + '</g>';
+       '<path id="lc_repA" class="rfade" d="M-30,10 q0,-26 30,-26 q30,0 30,26 l-8,0 l0,-8 l-10,0 l0,8 l-24,0 l0,-8 l-10,0 l0,8 z" fill="#7E57C2"/>' +
+       '<g id="lc_repB" class="rfade" opacity="0"><path transform="rotate(-12)" d="M-31,6 q4,-24 31,-22 q27,3 29,24 l-9,6 l-3,-10 l-9,1 l1,9 l-22,-1 l-5,-9 l-9,3 l1,8 z" fill="#B39DDB"/>' +
+       '<path d="M-4,-15 l5,8 l-6,5 l5,9" fill="none" stroke="#fff" stroke-width="2"/></g>' +
+       '<g id="lc_ind" class="rfade" opacity="0"><polygon points="34,-17 43,-8 34,1 25,-8" fill="#43A047" stroke="#fff" stroke-width="1.5"/></g></g>';
+  h += txt('lc_indT', 198, 47, '젖당 유도체', 13.5, '#2E7D32', '', '800', ' opacity="0" class="rfade"');
+  h += txt('lc_bend', 360, 154, '젖당 유도체가 붙자 억제단백질의 모양이 바뀐다 → 작동부위에 붙어 있지 못한다', 14.5, '#5E35B1', 'middle', '800', ' opacity="0" class="rfade"');
   h += txt('lc_repT', 151, 22, '억제단백질', 13.5, '#5E35B1', 'middle', '800', ' opacity="0" class="rfade"');
   h += txt('lc_block', 360, 154, '✕ RNA 중합효소가 프로모터에 결합하지 못해 전사가 일어나지 않는다', 14.5, C_INK, 'middle', '800', ' opacity="0" class="rfade"');
   h += '<g id="lc_go" class="rfade" opacity="0">' + arrow(46, 150, 586, 150, C_LACZ, 3) + txt('', 316, 172, '전사가 일어난다 → lacZ 의 효소가 만들어진다', 14.5, C_LACZ_INK, 'middle', '800') + '</g>';
@@ -1558,14 +1562,16 @@ function lacSvg(){
   h += '</g>';
   return h;
 }
-var LC_STEP = ['① 젖당 오페론 되짚기', '② 유전자의 이름', '③ 억제단백질이 막고 있다', '④ 유도 물질이 전사를 켠다', '⑤ lacZ가 만드는 효소', '⑥ X-gal 실험'];
-/* ★교사 11-11 「억제·유도가 왜 후반에 나오나」 → 오페론 조절(③④)을 효소(⑤) 앞에 두어 「전사가 켜진다 → 효소가 만들어진다 → X-gal」 한 줄로 이었다.
-   (⑦ 이 실험에 쓰는 대장균은 ③-2 카드로 뗐다) */
+var LC_STEP = ['① 젖당 오페론 되짚기', '② 유전자의 이름', '③ 억제단백질이 막고 있다', '④ 젖당 유도체가 붙는다', '⑤ 억제단백질이 떨어져 나간다', '⑥ lacZ가 만드는 효소', '⑦ X-gal 실험'];
+/* ★교사 11-11 「억제·유도가 왜 후반에 나오나」 → 오페론 조절(③~⑤)을 효소(⑥) 앞에 두어 「전사가 켜진다 → 효소가 만들어진다 → X-gal」 한 줄로 이었다.
+   ★교사 11-11 「옆으로 옮겨 가니 전사하는 애 같다」 → 억제단백질은 제자리에서 모양이 바뀌고(④) 떨어져 사라지며(⑤), 전사는 RNA 중합효소가 한다.
+   (이 실험에 쓰는 대장균은 ③-2 카드로 뗐다) */
 var LC_CAP = [
   '2-2에서 배운 <b>젖당 오페론</b>이다(71쪽 그림 Ⅱ-9). 프로모터와 작동부위 뒤에 젖당 이용에 필요한 <b>구조유전자 3개</b>가 모여 있다.',
   '구조유전자 3개에는 이름이 있다. 차례로 <i>lacZ</i> · <i>lacY</i> · <i>lacA</i> 이다. <i>lac</i>은 젖당(lactose)을 뜻한다. 유전자 이름은 기울여 쓴다.',
   '젖당이 없을 때는 <b>억제단백질</b>이 작동부위에 결합한다. 그러면 RNA 중합효소가 프로모터에 결합하지 못해 구조유전자가 <b>전사되지 않는다</b>(2-2 복습).',
-  '젖당이 있으면 젖당 유도체가 억제단백질에 결합하여 억제단백질이 작동부위에서 <b>떨어진다</b>. 그러면 구조유전자가 전사된다. 실험에서는 같은 일을 하는 <b>유도 물질</b>을 배지에 넣는다 — ④의 플라스미드에서도 <i>lacZ</i>가 프로모터·작동부위 뒤에 있기 때문이다.',
+  '젖당이 있으면 <b>젖당 유도체</b>가 억제단백질에 결합한다. 그러면 억제단백질의 <b>모양이 바뀌어</b> 작동부위에 붙어 있지 못한다. ④의 플라스미드에서도 <i>lacZ</i>가 프로모터·작동부위 뒤에 있으므로, 실험 배지에 젖당 유도체를 넣는다.',
+  '모양이 바뀐 억제단백질은 작동부위에서 <b>떨어져 나간다</b>. 이제 <b>RNA 중합효소</b>가 프로모터에 결합하여 구조유전자를 <b>전사</b>한다. 전사하는 것은 억제단백질이 아니라 RNA 중합효소이다.',
   '전사된 <i>lacZ</i>가 번역되면 <b>젖당 분해효소(β-갈락토시데이스)</b>가 만들어진다. 이 효소는 젖당을 포도당과 갈락토스로 분해한다. <b><i>lacZ</i>가 온전해야 이 효소가 만들어진다.</b>',
   '<b>X-gal</b>은 젖당과 모양이 닮은 <b>무색</b> 물질이다. β-갈락토시데이스는 X-gal도 분해하는데, 그러면 <b>파란 색소</b>가 생긴다. 오른쪽 단추로 두 시험관에 X-gal을 넣어 색을 비교하시오.'
 ];
@@ -1574,26 +1580,30 @@ function lacApply(){
   var ph = PH.lac;
   LAC_SEG.forEach(function(s){ if (s.name) fadeTo('lc_n' + s.id, ph >= 1 ? 1 : 0); });
   fadeTo('lc_lac', ph >= 1 ? 1 : 0);
-  fadeTo('lc_enz', ph >= 4 ? 1 : 0);
-  fadeTo('lc_tubes', ph >= 5 ? 1 : 0);
+  fadeTo('lc_enz', ph >= 5 ? 1 : 0);
+  fadeTo('lc_tubes', ph >= 6 ? 1 : 0);
   fillTo('lc_liq_on', state.lacDrop.on ? C_XBLUE : '#EEF3F6');
   fillTo('lc_liq_off', state.lacDrop.off ? '#F4F7F9' : '#EEF3F6');
   setText('lc_res_on', state.lacDrop.on ? '파랑' : '');
   setText('lc_res_off', state.lacDrop.off ? '무색' : '');
   var rOn = document.getElementById('lc_res_on'); if (rOn) rOn.setAttribute('fill', '#fff');
-  /* 억제단백질: 2 = 작동부위에 붙음 · 3 이후 = 유도 물질이 붙어 떨어져 있다(켜진 상태가 이어진다) */
-  var repOn = ph >= 2, off = ph >= 3;
-  putAt('lc_rep', off ? 660 : 151, off ? 40 : 52, repOn ? 1 : 0);
-  fadeTo('lc_ind', off ? 1 : 0);
-  fadeTo('lc_indT', off ? 1 : 0);
-  fadeTo('lc_repT', ph === 2 ? 1 : 0);
+  /* 억제단백질: 2 = 작동부위에 붙음 · 3 = 젖당 유도체가 붙어 모양이 바뀜 · 4 이후 = 떨어져 사라짐 */
+  var gone = ph >= 4;
+  putAt('lc_rep', 151, gone ? -30 : 52, (ph === 2 || ph === 3) ? 1 : 0);
+  fadeTo('lc_repA', ph >= 3 ? 0 : 1);   /* 떠날 때도 일그러진 모양 그대로 */
+  fadeTo('lc_repB', ph >= 3 ? 1 : 0);
+  fadeTo('lc_ind', ph === 3 ? 1 : 0);
+  fadeTo('lc_indT', ph === 3 ? 1 : 0);
+  fadeTo('lc_repT', (ph === 2 || ph === 3) ? 1 : 0);
   fadeTo('lc_block', ph === 2 ? 1 : 0);
-  fadeTo('lc_go', ph === 3 ? 1 : 0);
+  fadeTo('lc_bend', ph === 3 ? 1 : 0);
+  fadeTo('lc_pol', ph === 4 ? 1 : 0);
+  fadeTo('lc_go', ph === 4 ? 1 : 0);
 }
 function renderLac(){
   if (!MOUNT.lac){ setHTML('lacStage', lacSvg()); MOUNT.lac = true; }
   lacApply();
-  var mech = document.getElementById('lacMech'); if (mech) mech.style.display = PH.lac >= 5 ? 'block' : 'none';
+  var mech = document.getElementById('lacMech'); if (mech) mech.style.display = PH.lac >= 6 ? 'block' : 'none';
   var h = '';
   [{ id:'on', t:'효소 있는 시험관에 X-gal 넣기' }, { id:'off', t:'효소 없는 시험관에 X-gal 넣기' }].forEach(function(b){
     h += '<button type="button" class="pchip lacz' + (state.lacDrop[b.id] ? ' on' : '') + '" onclick="lacDrop(&#39;' + b.id + '&#39;)">💧 ' + b.t + (state.lacDrop[b.id] ? '<small>다시 누르면 넣기 전으로</small>' : '') + '</button>';
@@ -1609,7 +1619,7 @@ function lacDrop(id){
     saveState(); renderLac(); updateAll(); return;
   }
   state.lacDrop[id] = true;
-  if (PH.lac < 5) PH.lac = 5;
+  if (PH.lac < 6) PH.lac = 6;
   if (lacDrops() === 2){ state.lacSeen = true;   /* X-gal이 마지막 단계라 여기서 「끝까지 봄」을 매긴다 */
     showFb('fb_lac', 'good', '✅ 효소가 있는 시험관만 <b>파랗게</b> 변했다. 효소가 X-gal을 분해해야 파란 색소가 생긴다. 아래 문항에 답하시오.'); }
   else showFb('fb_lac', 'info', id === 'on' ? '효소가 있는 시험관이 <b>파랗게</b> 변했다. 다른 시험관에도 넣으시오.' : '효소가 없는 시험관은 <b>무색</b>으로 남았다. 다른 시험관에도 넣으시오.');
@@ -1736,11 +1746,11 @@ var SL_CAP = [
   'Ⓐ로 잘라 낸 인슐린 유전자와 섞고 DNA 연결효소로 잇는다. ②에서 본 것처럼 두 종류가 생긴다. <b>재조합 플라스미드</b>는 인슐린 유전자가 <i>lacZ</i> 가운데에 끼어들어 <b><i>lacZ</i>가 둘로 끊겼다</b>. <b>빈 플라스미드</b>는 <i>lacZ</i>가 온전하다.',
   '플라스미드를 대장균에 넣는다(형질전환). 그러나 모든 대장균이 플라스미드를 받아들이는 것은 아니다. 대장균은 세 종류가 된다 — ① 받지 못한 것 · ② 빈 플라스미드를 받은 것 · ③ 재조합 플라스미드를 받은 것.',
   '<b>예시 1</b> — 대장균을 <b>항생제</b>이 든 배지에서 키운다. 항생제 저항성 유전자가 없는 ①은 죽는다. ②와 ③은 둘 다 플라스미드에 항생제 저항성 유전자가 있으므로 <b>둘 다 산다</b>. 항생제 배지만으로는 ②와 ③을 <b>구별할 수 없다</b>.',
-  '<b>예시 2</b> — 배지에 <b>X-gal과 유도 물질</b>을 함께 넣는다. ②는 <i>lacZ</i>가 온전하므로 β-갈락토시데이스를 만들고, 이 효소가 X-gal을 분해하여 ②의 군체가 <b>파랗게</b> 된다.',
+  '<b>예시 2</b> — 배지에 <b>X-gal과 젖당 유도체</b>를 함께 넣는다. ②는 <i>lacZ</i>가 온전하므로 β-갈락토시데이스를 만들고, 이 효소가 X-gal을 분해하여 ②의 군체가 <b>파랗게</b> 된다.',
   '③은 인슐린 유전자가 끼어들어 <i>lacZ</i>가 끊겼으므로 β-갈락토시데이스를 만들지 못한다. X-gal이 분해되지 않아 ③의 군체는 <b>흰색</b>으로 남는다.',
   '따라서 <b>흰 군체</b>가 재조합 플라스미드를 가진 대장균이다. 이 군체를 골라 증식시킨다. 이렇게 원하는 형질 전환체를 골라내는 것이 그림 Ⅲ-2의 <b>「형질 전환체의 선별」</b>이다.'
 ];
-var SL_BAN = ['', '', '', '', '예시 1 · 항생제 배지', '예시 2 · 항생제 + X-gal + 유도 물질', '예시 2 · 항생제 + X-gal + 유도 물질', '흰 군체를 골라 증식시킨다'];
+var SL_BAN = ['', '', '', '', '예시 1 · 항생제 배지', '예시 2 · 항생제 + X-gal + 젖당 유도체', '예시 2 · 항생제 + X-gal + 젖당 유도체', '흰 군체를 골라 증식시킨다'];
 /* 국면 → 배지 (무대의 대장균 판정에 쓴다) */
 function selMedium(ph){ return ph >= 5 ? 'xgal' : (ph === 4 ? 'amp' : ''); }
 /* ★국면 → 물체 배치. 검사가 무는 순수 함수 */
@@ -2602,7 +2612,7 @@ var Q_SEL = [
         '옳지 않다. 인슐린 유전자는 <i>lacZ</i> 가운데에 들어갔다. 항생제 저항성 유전자는 그대로이므로 재조합 플라스미드를 받은 대장균도 산다.'],
     ex:'항생제 배지는 플라스미드를 <b>받았는가</b>만 가린다. 빈 플라스미드와 재조합 플라스미드에는 모두 항생제 저항성 유전자가 있으므로, 두 대장균은 똑같이 자란다. 그래서 <b>예시 2</b>가 필요하다.' },
   { id:'q5',
-    q:'X-gal과 유도 물질이 든 배지에서 재조합 플라스미드를 가진 대장균의 군체가 흰색인 까닭으로 옳은 것은?',
+    q:'X-gal과 젖당 유도체가 든 배지에서 재조합 플라스미드를 가진 대장균의 군체가 흰색인 까닭으로 옳은 것은?',
     ch:['항생제 저항성 유전자가 끊겨 항생제를 분해하지 못하기 때문이다.',
         '재조합 플라스미드를 받은 대장균은 배지에 든 X-gal을 세포 안으로 전혀 흡수하지 못하기 때문이다.',
         '인슐린 유전자가 <i>lacZ</i> 가운데에 끼어들어 β-갈락토시데이스를 만들지 못하기 때문이다.',
@@ -2657,7 +2667,7 @@ var Q_INS = [
     dat:['플라스미드에는 <b>항생제 저항성 유전자</b>와 <b><i>lacZ</i></b>가 있다.',
          '제한효소로 <b><i>lacZ</i>의 가운데</b>를 잘라 유전자 Y를 넣고, DNA 연결효소로 이었다.',
          '이 플라스미드를 염색체의 <i>lacZ</i>가 고장 났고 항생제 저항성이 없는 대장균에 넣었다. 대장균 Ⅰ~Ⅲ은 플라스미드를 받지 못한 대장균, 빈 플라스미드를 받은 대장균, 재조합 플라스미드를 받은 대장균을 순서 없이 나타낸 것이다.',
-         '두 배지에는 모두 유도 물질이 들어 있다.'],
+         '두 배지에는 모두 젖당 유도체가 들어 있다.'],
     q:'이에 대한 설명으로 옳은 것은?',
     ch:['Ⅱ는 빈 플라스미드를 받은 대장균이다.',
         'Ⅲ은 <i>lacZ</i>가 끊겨 β-갈락토시데이스를 만들지 못한다.',
@@ -2782,7 +2792,7 @@ var Q_CR = [
 
 var PRACTICE = [
   { id:'p1', lv:'중',
-    q:'인슐린 유전자를 넣은 플라스미드를 대장균에 넣고 항생제 + X-gal + 유도 물질이 든 배지에서 키웠더니, 파란 군체 20개와 흰 군체 7개가 자랐다. 인슐린 유전자가 들어간 재조합 플라스미드를 가진 군체는 몇 개인가?',
+    q:'인슐린 유전자를 넣은 플라스미드를 대장균에 넣고 항생제 + X-gal + 젖당 유도체가 든 배지에서 키웠더니, 파란 군체 20개와 흰 군체 7개가 자랐다. 인슐린 유전자가 들어간 재조합 플라스미드를 가진 군체는 몇 개인가?',
     ch:['0개', '20개', '7개', '27개'],
     a:2,
     no:['옳지 않다. 흰 군체는 lacZ가 끊긴 것이므로 재조합 플라스미드를 가진다.',
@@ -3267,7 +3277,7 @@ function init(){
   state.teacherUnlock = false;
   /* ★끝까지 본 무대는 완료 국면에서 시작한다 — 새로고침이 결과를 도로 감추면 안 된다. */
   PH.lig = (state.ligSeen && state.ligFrag === 'A') ? STG.lig.last : 0;
-  PH.lac = state.lacSeen ? STG.lac.last : (lacDrops() ? 5 : 0);
+  PH.lac = state.lacSeen ? STG.lac.last : (lacDrops() ? 6 : 0);
   PH.sel = state.selSeen ? STG.sel.last : 0;
   PH.mab = state.mabSeen ? STG.mab.last : 0;
   PH.kit = state.kitSample ? STG.kit.last : 0;

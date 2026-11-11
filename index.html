@@ -184,7 +184,7 @@ svg.stage{display:block;width:100%;min-width:560px;height:auto;touch-action:mani
 .recap .rc .rk{display:block;color:var(--sub);font-size:13.5px;font-weight:700;}
 .bigq{border:2px solid var(--gene);background:var(--gene-bg);border-radius:12px;padding:12px 15px;font-size:17px;font-weight:700;line-height:1.7;color:var(--gene-ink);}
 .plhd{font-weight:800;margin:14px 0 2px;color:var(--ink);}
-/* ③ X-gal 반응 3단계 · ③-2 숙주 대장균 */
+/* ③ X-gal 반응 3단계 */
 .mech{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:6px;}
 .mstep{border:1px solid var(--line);border-radius:10px;background:#fff;padding:8px 9px;}
 .mstep svg{display:block;width:100%;height:auto;max-height:64px;}
@@ -212,6 +212,11 @@ svg.stage{display:block;width:100%;min-width:560px;height:auto;touch-action:mani
 .gtbl th{background:#F4F6F9;font-weight:700;}
 .gtbl td.rk{text-align:left;font-weight:700;}
 .gtbl td.blank{color:#A0A7B1;}
+.gtbl small{display:block;font-size:13px;font-weight:600;color:var(--sub);}
+.gtbl tr.verdict td{background:#FAFBFC;font-size:14px;font-weight:700;}
+.peek{display:flex;gap:12px;align-items:center;flex-wrap:wrap;}
+.peek svg{width:150px;height:auto;flex:none;}
+.peek ul{margin:0;padding-left:18px;flex:1;min-width:180px;}
 .gtbl th.on{background:var(--plas-bg);color:var(--plas-ink);}
 
 /* ── 그림(교과서) ── */
@@ -320,6 +325,8 @@ html:not(.unlocked) #draftGate{display:flex;}
   h1{font-size:21px;} h2{font-size:17px;}
   .card{padding:14px 13px 16px;}
 }
+.outtb{color:#D32F2F !important;font-weight:800;}
+.yr.outtb{background:#FDECEA;}
 </style>
 </head>
 <body>
@@ -399,7 +406,7 @@ html:not(.unlocked) #draftGate{display:flex;}
             </ul>
           </div>
           <div class="panel outside">
-            <div class="ptitle">📎 교과서 밖 설명</div>
+            <div class="ptitle">📎 <span class="outtb">교과서 밖 설명</span></div>
             <p>제한효소 Ⓐ의 인식 서열(GAATTC)은 교과서 그림 Ⅲ-3과 같다. 비교용 <b>제한효소 Ⓑ(GGATCC)</b>는 교과서에 없는 모형이다. 실제 이름은 Ⓐ가 EcoRI, Ⓑ가 BamHI이다.</p>
           </div>
           <div class="msg hide" id="fb_cut"></div>
@@ -468,7 +475,7 @@ html:not(.unlocked) #draftGate{display:flex;}
         <div class="anibar" id="bar_lac"></div>
         <div class="anicap lacz" id="lc_cap"></div>
         <div class="panel" id="lacMech" style="display:none">
-          <div class="ptitle">🔬 X-gal은 어떻게 파랗게 되는가? <span style="font-weight:600;color:var(--sub);font-size:13.5px">(교과서 밖 설명)</span></div>
+          <div class="ptitle">🔬 X-gal은 어떻게 파랗게 되는가? <span class="outtb" style="font-size:13.5px">(교과서 밖 설명)</span></div>
           <div class="mech">
             <div class="mstep"><svg viewBox="0 0 150 56" aria-hidden="true"><polygon points="22,10 40,10 49,26 40,42 22,42 13,26" fill="#FFE082" stroke="#B08850" stroke-width="2"/><text x="31" y="31" font-size="11" text-anchor="middle" font-weight="800" fill="#1A1A1A">갈락토스</text><line x1="49" y1="26" x2="70" y2="26" stroke="#1A1A1A" stroke-width="3"/><rect x="70" y="12" width="66" height="28" rx="6" fill="#FFFFFF" stroke="#90A4AE" stroke-width="2"/><text x="103" y="31" font-size="11" text-anchor="middle" font-weight="800" fill="#555">무색 조각</text></svg>
               <p><b>① X-gal (무색)</b><br>갈락토스에 무색 조각이 붙어 있다. 젖당(갈락토스 + 포도당)과 모양이 닮았다.</p></div>
@@ -490,7 +497,7 @@ html:not(.unlocked) #draftGate{display:flex;}
           <div class="taskbar">▶ 다음을 눌러 끝까지 보시오. 마지막 단계에서는 아래 단추로 두 시험관에 X-gal을 넣으시오.</div>
           <div class="chiprow" id="dropChips"></div>
           <div class="panel outside">
-            <div class="ptitle">📎 교과서 밖 설명</div>
+            <div class="ptitle">📎 <span class="outtb">교과서 밖 설명</span></div>
             <ul>
               <li><i>lacZ</i> · <i>lacY</i> · <i>lacA</i> — 교과서 그림 Ⅱ-9의 유전자 1 · 2 · 3의 이름이다. 유전자 이름은 <b>기울여</b> 쓴다.</li>
               <li><b>β-갈락토시데이스</b> — <i>lacZ</i>가 만드는 젖당 분해효소의 이름이다.</li>
@@ -506,47 +513,14 @@ html:not(.unlocked) #draftGate{display:flex;}
   </div>
 
   <!-- ══ ④ 청백 선별 원리 ══ -->
-  <!-- ══ ③-2 이 실험에 쓰는 대장균 (교사 11-11 — ③ 연출의 마지막 단계에서 떼어 냈다) ══ -->
-  <div class="card split" id="cardHost" data-hub-card="s3h">
-    <div class="hd">
-      <h2 class="lacz">③-2 이 실험에 쓰는 대장균<span class="yr">교과서 밖 설명</span></h2>
-      <span class="tag" id="hostProg">비교 0 / 2</span>
-    </div>
-    <div class="panes">
-      <div class="pane-l">
-        <div class="stage-wrap"><svg class="stage" id="hostStage" viewBox="0 0 720 330" xmlns="http://www.w3.org/2000/svg" role="img"
-             aria-label="위는 대장균과 그 염색체의 lacZ이다. 아래는 빈 플라스미드와 재조합 플라스미드를 받은 대장균의 군체가 X-gal 배지에서 띠는 색이다."></svg></div>
-        <div class="anicap lacz" id="host_cap"></div>
-      </div>
-      <div class="pane-r">
-        <div class="pr-do">
-          <div class="goal"><b>🎯 이 단계의 목적</b><br>④의 청백 선별에서 군체의 색은 <b>받아들인 플라스미드의 <i>lacZ</i></b>만으로 정해져야 한다. 그러려면 어떤 대장균을 써야 하는지 확인하시오.</div>
-          <div class="taskbar">두 가지 대장균을 차례로 골라, 빈 플라스미드와 재조합 플라스미드를 받았을 때 군체의 색을 비교하시오.</div>
-          <div class="chiprow" id="hostChips"></div>
-          <div class="panel">
-            <div class="ptitle">🔎 선별에 쓰는 대장균의 조건</div>
-            <ul>
-              <li>자기 염색체의 <i>lacZ</i>가 <b>고장 난</b> 대장균이다 — 스스로는 β-갈락토시데이스를 만들지 못한다.</li>
-              <li>항생제 저항성 유전자가 <b>없는</b> 대장균이다 — 플라스미드를 받은 것만 항생제 배지에서 산다.</li>
-              <li>그래서 살아남은 군체가 파란지 흰지는 오직 <b>받아들인 플라스미드의 <i>lacZ</i>가 온전한지</b>로 정해진다.</li>
-            </ul>
-          </div>
-          <div class="msg hide" id="fb_host"></div>
-        </div>
-        <div class="pr-q"><div id="hostQ"></div></div>
-      </div>
-    </div>
-    <div class="secreset"><button type="button" onclick="resetSec('host')">↻ ③-2 다시 하기</button></div>
-  </div>
-
   <div class="card split" id="cardSel" data-hub-card="s4">
     <div class="hd">
       <h2 class="plas">④ 형질 전환체의 선별 — 청백 선별의 원리<span class="yr">교과서 103쪽 그림 Ⅲ-2</span></h2>
-      <span class="tag" id="selProg">단계 1 / 8</span>
+      <span class="tag" id="selProg">단계 1 / 11</span>
     </div>
     <div class="panes">
       <div class="pane-l">
-        <div class="stage-wrap"><svg class="stage" id="selStage" viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg" role="img"
+        <div class="stage-wrap"><svg class="stage" id="selStage" viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" role="img"
              aria-label="위는 항생제 저항성 유전자와 lacZ를 가진 플라스미드이고, 아래는 세 종류의 대장균이다. 항생제 배지와 X-gal 배지에서 각 대장균이 어떻게 되는지 단계별로 보여 준다."></svg></div>
         <div class="anibar" id="bar_sel"></div>
         <div class="anicap" id="sl_cap"></div>
@@ -555,12 +529,13 @@ html:not(.unlocked) #draftGate{display:flex;}
       <div class="pane-r">
         <div class="pr-do">
           <div class="goal"><b>🎯 이 단계의 목적</b><br>②에서 본 것처럼 시험관에는 재조합 플라스미드와 빈 플라스미드가 섞여 있다. 이것을 대장균에 넣은 뒤, <b>재조합 플라스미드를 가진 대장균만 골라내는 방법</b>을 예시 두 가지로 확인하시오.</div>
-          <div class="taskbar">왼쪽 그림 아래의 <b>▶ 다음</b>을 눌러 8단계를 끝까지 보시오. 단계마다 세 대장균이 어떻게 달라지는지 비교하시오.</div>
+          <div class="taskbar">왼쪽 그림 아래의 <b>▶ 다음</b>을 눌러 11단계를 끝까지 보시오. 단계마다 세 대장균이 어떻게 달라지는지 비교하시오.</div>
           <div class="panel">
             <div class="ptitle">🔎 두 예시의 차이</div>
             <ul>
               <li><b>예시 1 · 항생제 저항성</b> — 플라스미드를 <b>받았는가</b>를 가린다.</li>
               <li><b>예시 2 · <i>lacZ</i> 청백 선별</b> — 받은 플라스미드에 <b>인슐린 유전자가 들어갔는가</b>를 가린다.</li>
+              <li>예시 2의 배지에는 <b>항생제도 함께</b> 넣는다 — 플라스미드를 받지 못한 대장균을 먼저 없애야 <b>흰 군체 = 재조합</b>이 된다(⑩단계).</li>
             </ul>
           </div>
           <div class="msg hide" id="fb_sel"></div>
@@ -575,7 +550,7 @@ html:not(.unlocked) #draftGate{display:flex;}
   <div class="card split" id="cardPlate" data-hub-card="s5">
     <div class="hd">
       <h2 class="plas">⑤ 배양 접시에서 직접 골라내기</h2>
-      <span class="tag" id="plateProg">배지 0 / 3 · 고른 군체 없음</span>
+      <span class="tag" id="plateProg">배지 0 / 4 · 고른 군체 없음</span>
     </div>
     <div class="panes">
       <div class="pane-l">
@@ -586,9 +561,10 @@ html:not(.unlocked) #draftGate{display:flex;}
       </div>
       <div class="pane-r">
         <div class="pr-do">
-          <div class="taskbar">배지를 하나씩 바꾸어 같은 대장균이 어떻게 자라는지 관찰하시오. 세 배지를 모두 본 뒤, <b>골라 키울 군체</b>를 접시에서 하나 누르시오.</div>
+          <div class="taskbar">배지를 하나씩 바꾸어 같은 대장균이 어떻게 자라는지 관찰하시오. 군체를 누르면 그 군체 속을 볼 수 있다. 네 배지를 모두 본 뒤, <b>골라 키울 군체</b>를 접시에서 하나 고르시오.</div>
           <div class="chiprow" id="medChips"></div>
           <div class="msg hide" id="fb_plate"></div>
+          <div class="panel" id="peekBox"></div>
         </div>
         <div class="pr-q"><div id="plateQ"></div></div>
       </div>
@@ -684,7 +660,7 @@ html:not(.unlocked) #draftGate{display:flex;}
             </ul>
           </div>
           <div class="panel outside">
-            <div class="ptitle">📎 교과서 밖 설명</div>
+            <div class="ptitle">📎 <span class="outtb">교과서 밖 설명</span></div>
             <p>검사선 = T(test), 대조선 = C(control)이다. <b>대조선이 나타나지 않으면</b> 시료가 끝까지 번지지 않았거나 키트에 문제가 있는 것이므로 <b>무효</b>로 보고 다시 검사한다.</p>
           </div>
           <div class="msg hide" id="fb_kit"></div>
@@ -874,7 +850,7 @@ html:not(.unlocked) #draftGate{display:flex;}
     <button class="btn gray" onclick="resetAll()">🔄 처음부터 다시 하기</button>
     <p class="src">
       출처 — 고등학교 「생물의 유전」(이준규 외) 102~108쪽 「생명공학기술의 종류」 — DNA 재조합기술 · 단클론항체 · 줄기세포 · 유전자 편집 기술 · 그림 Ⅲ-2 ~ Ⅲ-8 · 108쪽 탐구 · 71쪽 그림 Ⅱ-9<br>
-      성취기준 12유전03-02 · 12유전03-03 &nbsp;|&nbsp; <i>lacZ</i> · X-gal · 제한효소 Ⓑ · 진단 키트의 무효 판정은 교과서 밖 설명이다.
+      성취기준 12유전03-02 · 12유전03-03 &nbsp;|&nbsp; <i>lacZ</i> · X-gal · 제한효소 Ⓑ · 진단 키트의 무효 판정은 <span class="outtb">교과서 밖 설명</span>이다.
     </p>
   </footer>
 
@@ -943,6 +919,7 @@ var KINDS = [
 var MEDIA = [
   { id:'plain', name:'일반 배지', sub:'항생제 없음' },
   { id:'amp',   name:'항생제 배지', sub:'예시 1' },
+  { id:'xonly', name:'X-gal 배지', sub:'항생제 없음 · 젖당 유도체 포함' },
   { id:'xgal',  name:'항생제 + X-gal 배지', sub:'예시 2 · 젖당 유도체 포함' }
 ];
 function hasAmpR(kind){ return kind === 'emp' || kind === 'rec'; }
@@ -950,9 +927,20 @@ function lacZIntact(kind){ return kind === 'emp'; }          /* 숙주의 lacZ�
 /* ★판정은 여기 하나 — { grow:bool, color:'cream'|'blue'|'white'|'' } */
 function colonyLook(kind, med){
   if (med === 'plain') return { grow:true, color:'cream' };
+  if (med === 'xonly') return { grow:true, color:lacZIntact(kind) ? 'blue' : 'white' };   /* 항생제가 없어 모두 자란다 */
   if (!hasAmpR(kind)) return { grow:false, color:'' };
   if (med === 'amp') return { grow:true, color:'cream' };
   return { grow:true, color:lacZIntact(kind) ? 'blue' : 'white' };
+}
+/* ⑤ 표 · 군체 속 — 왜 그렇게 되는가 */
+function lacZState(kind){ return kind === 'none' ? '없음' : (kind === 'emp' ? '온전' : '끊김'); }
+function lookWhy(kind, med){
+  if (med === 'plain') return '항생제 없음 → 모두 자람';
+  var res = hasAmpR(kind) ? '저항성 유전자 ○' : '저항성 유전자 ✕';
+  var lz = 'lacZ ' + lacZState(kind) + ' → 효소 ' + (lacZIntact(kind) ? '○' : '✕');
+  if (med === 'amp') return res;
+  if (med === 'xonly') return lz;
+  return hasAmpR(kind) ? lz : res;
 }
 function lookText(L){
   if (!L.grow) return '자라지 못한다';
@@ -1029,8 +1017,6 @@ function freshState(){
     ligSeen:false,     /* ② A로 마지막 국면까지 보았는가 */
     lacDrop:{},        /* ③ X-gal을 넣은 시험관 { on:true, off:true } */
     lacSeen:false,
-    hostSel:'',        /* ③-2 고른 대장균 */
-    hostSeen:{},       /* ③-2 본 대장균 */
     selSeen:false,
     medium:'',         /* ⑤ 지금 배지 */
     medSeen:{},        /* ⑤ 본 배지 */
@@ -1111,8 +1097,7 @@ var STEPS = [
   { key:'cut',   no:'①', name:'제한효소', sub:'자르기' },
   { key:'lig',   no:'②', name:'DNA 연결효소', sub:'재조합 DNA' },
   { key:'lac',   no:'③', name:'lacZ', sub:'젖당 오페론' },
-  { key:'host',  no:'③-2', name:'이 실험의 대장균', sub:'두 균주 비교' },
-  { key:'sel',   no:'④', name:'청백 선별', sub:'원리 8단계' },
+  { key:'sel',   no:'④', name:'청백 선별', sub:'원리 11단계' },
   { key:'plate', no:'⑤', name:'골라내기', sub:'배양 접시' },
   { key:'ins',   no:'⑥', name:'연습 문항', sub:'DNA 재조합 실험' },
   { key:'mab',   no:'⑦', name:'단클론항체', sub:'세포융합' },
@@ -1130,7 +1115,6 @@ function stepDone(k){
   if (k === 'cut')   return cutCount() === 3 && answeredOf(Q_CUT, state.qPick) === Q_CUT.length;
   if (k === 'lig')   return !!state.ligSeen && answeredOf(Q_LIG, state.qPick) === Q_LIG.length;
   if (k === 'lac')   return !!state.lacSeen && answeredOf(Q_LAC, state.qPick) === Q_LAC.length;
-  if (k === 'host')  return hostSeenCount() === HOSTS.length && answeredOf(Q_HOST, state.qPick) === Q_HOST.length;
   if (k === 'sel')   return !!state.selSeen && answeredOf(Q_SEL, state.qPick) === Q_SEL.length;
   if (k === 'plate') return medCount() === MEDIA.length && !!state.picked && answeredOf(Q_PLATE, state.qPick) === Q_PLATE.length;
   if (k === 'ins')   return answeredOf(Q_INS, state.qPick) === Q_INS.length;
@@ -1565,7 +1549,7 @@ function lacSvg(){
 var LC_STEP = ['① 젖당 오페론 되짚기', '② 유전자의 이름', '③ 억제단백질이 막고 있다', '④ 젖당 유도체가 붙는다', '⑤ 억제단백질이 떨어져 나간다', '⑥ lacZ가 만드는 효소', '⑦ X-gal 실험'];
 /* ★교사 11-11 「억제·유도가 왜 후반에 나오나」 → 오페론 조절(③~⑤)을 효소(⑥) 앞에 두어 「전사가 켜진다 → 효소가 만들어진다 → X-gal」 한 줄로 이었다.
    ★교사 11-11 「옆으로 옮겨 가니 전사하는 애 같다」 → 억제단백질은 제자리에서 모양이 바뀌고(④) 떨어져 사라지며(⑤), 전사는 RNA 중합효소가 한다.
-   (이 실험에 쓰는 대장균은 ③-2 카드로 뗐다) */
+   (11-11 교사: ③-2 「이 실험에 쓰는 대장균」 카드는 「그렇게까지 필요 없다」로 지웠다) */
 var LC_CAP = [
   '2-2에서 배운 <b>젖당 오페론</b>이다(71쪽 그림 Ⅱ-9). 프로모터와 작동부위 뒤에 젖당 이용에 필요한 <b>구조유전자 3개</b>가 모여 있다.',
   '구조유전자 3개에는 이름이 있다. 차례로 <i>lacZ</i> · <i>lacY</i> · <i>lacA</i> 이다. <i>lac</i>은 젖당(lactose)을 뜻한다. 유전자 이름은 기울여 쓴다.',
@@ -1627,69 +1611,6 @@ function lacDrop(id){
 }
 
 
-/* ══════════════════ 9-2. ③-2 이 실험에 쓰는 대장균 ══════════════════
-   ★교사 11-11 「선별에 필요한 대장균은 애초에 새로운 페이지에서」 — ③ 연출 ⑦을 떼어 카드로 세웠다.
-   판정: 군체가 파란가 = 염색체 lacZ 온전 || 플라스미드 lacZ 온전(빈 플라스미드) */
-var HOSTS = [
-  { id:'broken', name:'염색체의 lacZ가 고장 난 대장균', sub:'선별에 실제로 쓰는 것' },
-  { id:'intact', name:'염색체의 lacZ가 온전한 대장균', sub:'만약 이것을 쓴다면?' }
-];
-function hostBy(id){ var h = null; HOSTS.forEach(function(x){ if (x.id === id) h = x; }); return h; }
-function hostSeenCount(){ var n = 0; HOSTS.forEach(function(x){ if (state.hostSeen[x.id]) n++; }); return n; }
-function hostBlue(host, plas){ return host === 'intact' || plas === 'emp'; }
-function hostSvg(){
-  var h = '';
-  h += '<ellipse cx="360" cy="92" rx="250" ry="66" fill="' + C_CELL + '" stroke="' + C_CELL_LINE + '" stroke-width="2.5"/>';
-  h += txt('', 360, 46, '대장균', 15, C_INK, 'middle', '800');
-  h += '<path d="M150,98 q30,-26 60,0 q30,26 60,0 q30,-26 60,0 M410,98 q30,-26 60,0 q30,26 60,0 q20,-18 40,-6" fill="none" stroke="#90A4AE" stroke-width="3.5"/>';
-  h += '<rect x="330" y="86" width="80" height="24" rx="5" fill="' + C_LACZ + '"/>' + txt('', 370, 103, 'lacZ', 15, '#fff', 'middle', '800', ' font-style="italic"');
-  h += txt('', 255, 140, '대장균의 염색체', 13.5, C_SUB, 'middle', '700');
-  h += '<g id="hs_x" class="rfade" opacity="0"><line x1="334" y1="80" x2="406" y2="116" stroke="' + C_INK + '" stroke-width="4.5"/><line x1="406" y1="80" x2="334" y2="116" stroke="' + C_INK + '" stroke-width="4.5"/></g>';
-  h += txt('hs_ct', 470, 140, '', 14, C_INK, 'middle', '800');
-  h += '<line x1="20" y1="176" x2="700" y2="176" stroke="#E3E6EA" stroke-width="1.5"/>';
-  h += txt('', 360, 198, 'X-gal 배지에서 자란 군체의 색', 14.5, C_INK, 'middle', '800');
-  [{ id:'emp', x:220, t1:'빈 플라스미드를', t2:'받은 대장균' }, { id:'rec', x:500, t1:'재조합 플라스미드를', t2:'받은 대장균' }].forEach(function(c){
-    h += '<circle id="hs_c_' + c.id + '" class="rfill" cx="' + c.x + '" cy="246" r="34" style="fill:#ECEFF1" stroke="' + C_COL_LINE + '" stroke-width="2.5"/>';
-    h += '<circle id="hs_d_' + c.id + '" class="rfade" opacity="0" cx="' + c.x + '" cy="246" r="6" fill="#fff"/>';
-    h += txt('hs_t_' + c.id, c.x + 50, 251, '?', 15, C_INK, '', '800');
-    h += txt('', c.x, 300, c.t1, 13.5, C_INK, 'middle', '800') + txt('', c.x, 318, c.t2, 13.5, C_INK, 'middle', '800');
-  });
-  return h;
-}
-function hostApply(){
-  var hs = state.hostSel;
-  fadeTo('hs_x', hs === 'broken' ? 1 : 0);
-  setText('hs_ct', hs === 'broken' ? '✕ 고장 — 효소를 만들지 못한다' : (hs === 'intact' ? '○ 온전 — 효소를 만든다' : ''));
-  ['emp', 'rec'].forEach(function(k){
-    var el = document.getElementById('hs_c_' + k), blue = hs ? hostBlue(hs, k) : null;
-    if (el){ el.style.fill = blue === null ? '#ECEFF1' : (blue ? C_XBLUE : '#FFFFFF'); el.setAttribute('stroke', blue === false ? C_INK : C_COL_LINE); el.setAttribute('stroke-width', blue === false ? '4' : '2.5'); }
-    fadeTo('hs_d_' + k, blue ? 1 : 0);
-    setText('hs_t_' + k, blue === null ? '?' : (blue ? '파란색' : '흰색'));
-  });
-}
-function hostCap(){
-  if (state.hostSel === 'broken') return '염색체의 <i>lacZ</i>가 고장 나 있으므로 대장균 자신은 β-갈락토시데이스를 만들지 못한다. 빈 플라스미드를 받은 대장균은 플라스미드의 <i>lacZ</i>로 효소를 만들어 <b>파랗게</b> 되고, 재조합 플라스미드를 받은 대장균은 <i>lacZ</i>가 끊겨 <b>흰색</b>이다. → <b>색으로 구별된다.</b>';
-  if (state.hostSel === 'intact') return '염색체의 <i>lacZ</i>가 온전하면 대장균 자신이 β-갈락토시데이스를 만든다. 그러면 재조합 플라스미드를 받은 대장균도 X-gal을 분해하여 <b>파랗게</b> 된다. → 두 군체가 모두 파래서 <b>구별할 수 없다.</b>';
-  return '위의 오른쪽 단추로 대장균을 고르시오. 대장균에 따라 아래 두 군체의 색이 어떻게 달라지는지 비교한다.';
-}
-var MOUNT_HOST = false;
-function renderHost(){
-  if (!MOUNT_HOST){ setHTML('hostStage', hostSvg()); MOUNT_HOST = true; }
-  hostApply();
-  setHTML('hostChips', HOSTS.map(function(x){
-    return '<button type="button" class="pchip lacz' + (state.hostSel === x.id ? ' on' : '') + (state.hostSeen[x.id] ? ' done' : '') + '" onclick="hostPick(&#39;' + x.id + '&#39;)">' + x.name + '<small>' + x.sub + '</small></button>';
-  }).join(''));
-  setHTML('host_cap', hostCap());
-  var t = document.getElementById('hostProg'); if (t) t.textContent = '비교 ' + hostSeenCount() + ' / ' + HOSTS.length;
-}
-function hostPick(id){
-  if (!hostBy(id)) return;
-  state.hostSel = id; state.hostSeen[id] = true;
-  showFb('fb_host', hostSeenCount() === HOSTS.length ? 'good' : 'info', hostSeenCount() === HOSTS.length ? '✅ 두 대장균을 모두 비교하였다. 아래 문항에 답하시오.' : '다른 대장균도 골라 비교하시오.');
-  if (typeof window !== 'undefined' && window.hubTrack) window.hubTrack('s3h', 'host', id);
-  saveState(); renderHost(); updateAll();
-}
-
 /* ══════════════════ 10. ④ 청백 선별 원리 ══════════════════
    ★한 국면에 한 사건. 판정(살아남는가·색)은 colonyLook()에서 가져온다. */
 var SL_CELL = { none:{ x:120 }, emp:{ x:360 }, rec:{ x:600 }, y:150, rx:104, ry:56 };   /* ★11-11 교사 「4번 카드가 잘못된 것 같다」 — 그림판 절반이 비어 있었다(y 350 · 높이 480) → 대장균을 올리고 그림판을 줄였다 */
@@ -1712,97 +1633,163 @@ function cellSvg(id, x){
   return '<ellipse id="' + id + '" class="rfill" cx="' + x + '" cy="' + c.y + '" rx="' + c.rx + '" ry="' + c.ry + '" style="fill:' + C_CELL + '" stroke="' + C_CELL_LINE + '" stroke-width="2.5"/>' +
          '<path d="M' + (x - 78) + ',' + (c.y + 6) + ' q16,-30 38,-8 q22,22 40,-4" fill="none" stroke="#90A4AE" stroke-width="3"/>';
 }
+/* 작은 대장균 하나(군체가 되는 장면) */
+function rodSvg(x, y){
+  return '<rect x="' + (x - 17) + '" y="' + (y - 9) + '" width="34" height="18" rx="9" fill="' + C_CELL + '" stroke="' + C_CELL_LINE + '" stroke-width="2"/>';
+}
+function enzBlob(x, y, sc){
+  return '<path transform="translate(' + x + ',' + y + ') scale(' + sc + ')" d="M-20,-2 q10,-8 20,-2 q11,-7 20,3 q5,11 -8,14 q-15,5 -26,-1 q-10,-5 -6,-14 z" fill="' + C_LACZ + '"/>';
+}
 function selSvg(){
-  var h = '';
+  var h = '', c = SL_CELL;
   h += txt('sl_ban', 360, 34, '', 18, C_INK, 'middle', '800');
-  /* 대장균 세 마리 */
+  /* 대장균 세 마리(⑥ 이후엔 그 대장균의 군체) */
   h += '<g id="sl_cells" class="rfade" opacity="0">';
   KINDS.forEach(function(k, i){
-    var x = SL_CELL[k.id].x;
+    var x = c[k.id].x;
     h += cellSvg('sl_cf_' + k.id, x);
-    h += txt('sl_t_' + k.id, x, SL_CELL.y - SL_CELL.ry - 12, '', 16, C_INK, 'middle', '800');
-    h += txt('', x, SL_CELL.y + SL_CELL.ry + 22, ['①', '②', '③'][i] + ' ' + ['받지 못함', '빈 플라스미드', '재조합 플라스미드'][i], 14.5, C_INK, 'middle', '800');
-    h += txt('sl_d_' + k.id, x, SL_CELL.y + SL_CELL.ry + 42, '', 13.5, C_SUB, 'middle', '700');
+    h += txt('sl_t_' + k.id, x, c.y - c.ry - 12, '', 16, C_INK, 'middle', '800');
+    h += '<g id="sl_lb_' + k.id + '" class="rfade" opacity="0">' + txt('', x, c.y + c.ry + 22, ['①', '②', '③'][i] + ' ' + ['받지 못함', '빈 플라스미드', '재조합 플라스미드'][i], 14.5, C_INK, 'middle', '800') + '</g>';
+    h += txt('sl_d_' + k.id, x, c.y + c.ry + 44, '', 13.5, C_SUB, 'middle', '700');
+    h += txt('sl_e_' + k.id, x, c.y + c.ry + 63, '', 13.5, C_SUB, 'middle', '700');
   });
-  h += '<g id="sl_x" class="rfade" opacity="0"><line x1="70" y1="' + (SL_CELL.y - 44) + '" x2="170" y2="' + (SL_CELL.y + 44) + '" stroke="' + C_INK + '" stroke-width="5"/><line x1="170" y1="' + (SL_CELL.y - 44) + '" x2="70" y2="' + (SL_CELL.y + 44) + '" stroke="' + C_INK + '" stroke-width="5"/></g>';
-  h += '<g id="sl_dot" class="rfade" opacity="0"><circle cx="' + (SL_CELL.emp.x + 66) + '" cy="' + (SL_CELL.y + 22) + '" r="7" fill="#fff"/></g>';
-  h += '<ellipse id="sl_pick" class="rfade" opacity="0" cx="' + SL_CELL.rec.x + '" cy="' + SL_CELL.y + '" rx="' + (SL_CELL.rx + 7) + '" ry="' + (SL_CELL.ry + 5) + '" fill="none" stroke="' + C_GREEN + '" stroke-width="4" stroke-dasharray="9,5"/>';
+  h += '<g id="sl_x" class="rfade" opacity="0"><line x1="70" y1="' + (c.y - 44) + '" x2="170" y2="' + (c.y + 44) + '" stroke="' + C_INK + '" stroke-width="5"/><line x1="170" y1="' + (c.y - 44) + '" x2="70" y2="' + (c.y + 44) + '" stroke="' + C_INK + '" stroke-width="5"/></g>';
+  h += '<g id="sl_dot" class="rfade" opacity="0"><circle cx="' + (c.emp.x + 66) + '" cy="' + (c.y + 22) + '" r="7" fill="#fff"/></g>';
+  /* 세포 안 효소 — ② 있음 · ③ 없음 */
+  h += '<g id="sl_enz_emp" class="rfade" opacity="0">' + enzBlob(c.emp.x + 60, c.y - 10, 0.8) + txt('', c.emp.x + 60, c.y - 24, '효소', 12.5, C_LACZ_INK, 'middle', '800') + '</g>';
+  h += '<g id="sl_enz_rec" class="rfade" opacity="0"><path transform="translate(' + (c.rec.x + 48) + ',' + (c.y - 10) + ') scale(0.8)" d="M-20,-2 q10,-8 20,-2 q11,-7 20,3 q5,11 -8,14 q-15,5 -26,-1 q-10,-5 -6,-14 z" fill="none" stroke="#9AA0A6" stroke-width="2" stroke-dasharray="4,3"/>' +
+       txt('', c.rec.x + 48, c.y - 5, '✕', 16, C_INK, 'middle', '800') + txt('', c.rec.x + 48, c.y - 24, '효소 없음', 12.5, C_SUB, 'middle', '800') + '</g>';
+  h += '<ellipse id="sl_pick" class="rfade" opacity="0" cx="' + c.rec.x + '" cy="' + c.y + '" rx="' + (c.rx + 7) + '" ry="' + (c.ry + 5) + '" fill="none" stroke="' + C_GREEN + '" stroke-width="4" stroke-dasharray="9,5"/>';
   h += '</g>';
+  /* ⑩ 항생제를 뺐다면 — ①과 ③이 둘 다 흰색 */
+  h += '<g id="sl_warn" class="rfade" opacity="0"><path d="M120,' + (c.y + c.ry + 74) + ' l0,10 l480,0 l0,-10" fill="none" stroke="#D32F2F" stroke-width="2.5"/>' +
+       txt('', 360, c.y + c.ry + 104, '①과 ③이 둘 다 흰색 — 색만으로는 구별할 수 없다', 15, '#D32F2F', 'middle', '800') + '</g>';
+  /* 플라스미드 */
   h += '<g id="sl_full" class="rmove" transform="translate(200,130) scale(1)">' + ringSvg(78, { tick:true }) + '</g>';
   h += '<g id="sl_cut" class="rmove" opacity="0" transform="translate(200,130) scale(1)">' + ringSvg(78, { cut:true }) + '</g>';
   h += txt('sl_site', 300, 135, '◀ 제한자리 (lacZ 한가운데)', 14.5, C_INK, '', '800', ' class="rfade"');
   h += txt('sl_cutT', 300, 135, '◀ lacZ 가운데가 잘렸다', 14.5, C_INK, '', '800', ' opacity="0" class="rfade"');
+  h += '<g id="sl_free" class="rmove" opacity="0" transform="translate(120,72) scale(0.42)">' + ringSvg(62, {}) + '</g>';
   h += '<g id="sl_rec" class="rmove" opacity="0" transform="translate(220,130) scale(1)">' + ringSvg(62, { ins:true }) + '</g>';
   h += '<g id="sl_emp" class="rmove" opacity="0" transform="translate(520,130) scale(1)">' + ringSvg(62, {}) + '</g>';
   h += '<g id="sl_lab2" class="rfade" opacity="0">' +
        txt('', 220, 222, '재조합 플라스미드', 15, C_INK, 'middle', '800') + txt('', 220, 242, 'lacZ가 둘로 끊겼다', 14, C_GENE_INK, 'middle', '800') +
        txt('', 520, 222, '빈 플라스미드', 15, C_INK, 'middle', '800') + txt('', 520, 242, 'lacZ가 온전하다', 14, C_LACZ_INK, 'middle', '800') + '</g>';
+  h += txt('sl_freeT', 152, 78, '못 들어갔다', 13.5, C_SUB, '', '800', ' opacity="0" class="rfade"');
+  /* ⑥ 한 마리 → 군체 */
+  h += '<g id="sl_grow" class="rfade" opacity="0">';
+  h += rodSvg(90, 150);
+  h += rodSvg(250, 136) + rodSvg(250, 164);
+  h += rodSvg(392, 136) + rodSvg(430, 136) + rodSvg(392, 164) + rodSvg(430, 164);
+  h += '<circle cx="610" cy="150" r="46" fill="' + C_COL + '" stroke="' + C_COL_LINE + '" stroke-width="2.5"/>';
+  for (var gy = 0; gy < 4; gy++) for (var gx = 0; gx < 4; gx++){
+    var px = 584 + gx * 17 + (gy % 2) * 8, py = 124 + gy * 17;
+    if ((px - 610) * (px - 610) + (py - 150) * (py - 150) < 1500) h += '<rect x="' + (px - 6) + '" y="' + (py - 3) + '" width="12" height="6" rx="3" fill="' + C_CELL + '" stroke="' + C_COL_LINE + '" stroke-width="1"/>';
+  }
+  h += arrow(122, 150, 214, 150, C_SUB, 2.5) + arrow(285, 150, 356, 150, C_SUB, 2.5) + arrow(466, 150, 552, 150, C_SUB, 2.5);
+  h += txt('', 168, 140, '분열', 13.5, C_SUB, 'middle', '700') + txt('', 320, 140, '분열', 13.5, C_SUB, 'middle', '700') + txt('', 509, 140, '분열 반복', 13.5, C_SUB, 'middle', '700');
+  h += txt('', 90, 214, '대장균 1마리', 14.5, C_INK, 'middle', '800') + txt('', 250, 214, '2마리', 14.5, C_INK, 'middle', '800') +
+       txt('', 411, 214, '4마리', 14.5, C_INK, 'middle', '800') + txt('', 610, 218, '수백만 마리 = 군체', 14.5, C_INK, 'middle', '800') +
+       txt('', 610, 238, '(눈에 보이는 점)', 13.5, C_SUB, 'middle', '700');
+  h += txt('', 360, 282, '한 군체의 대장균은 모두 한 마리에서 나왔다 → 모두 같은 플라스미드를 가진다', 14.5, C_PLAS_INK, 'middle', '800');
+  h += '</g>';
   return h;
 }
-var SL_STEP = ['① 플라스미드 지도', '② lacZ 가운데를 자른다', '③ 인슐린 유전자를 넣고 잇는다', '④ 대장균에 넣는다', '⑤ 예시 1 · 항생제 배지', '⑥ 예시 2 · 파란 군체', '⑦ 예시 2 · 흰 군체', '⑧ 흰 군체를 골라 증식'];
+var SL_STEP = ['① 플라스미드 지도', '② lacZ 가운데를 자른다', '③ 인슐린 유전자를 넣고 잇는다', '④ 대장균과 섞는다', '⑤ 일부만 받아들인다', '⑥ 한 마리가 군체로', '⑦ 예시 1 · 항생제 배지', '⑧ 예시 2 · 파란 군체', '⑨ 예시 2 · 흰 군체', '⑩ 항생제를 함께 넣는 까닭', '⑪ 흰 군체를 골라 증식'];
+/* ★교사 11-11 「4번·5번을 더 자세히」 → 형질전환 장면(④⑤) · 한 마리 → 군체(⑥) · 세포 안 사슬(⑧⑨) · 항생제를 함께 넣는 까닭(⑩) */
 var SL_CAP = [
-  '이 플라스미드에는 유전자가 두 개 들어 있다. <b>항생제 저항성 유전자</b>(보라)는 항생제를 분해하는 효소의 유전자이고, <b><i>lacZ</i></b>(주황)는 ③에서 본 β-갈락토시데이스의 유전자이다. 제한효소 Ⓐ의 자리는 <i>lacZ</i> 한가운데에 한 곳 있다.',
+  '이 플라스미드에는 유전자가 두 개 들어 있다. <b>항생제 저항성 유전자</b>(보라)는 항생제를 분해하는 효소의 유전자이고, <b><i>lacZ</i></b>(황토색)는 ③에서 본 β-갈락토시데이스의 유전자이다. 제한효소 Ⓐ의 자리는 <i>lacZ</i> 한가운데에 한 곳 있다.',
   '제한효소 Ⓐ로 플라스미드를 자른다. 잘린 자리는 <b><i>lacZ</i> 한가운데</b>이다.',
   'Ⓐ로 잘라 낸 인슐린 유전자와 섞고 DNA 연결효소로 잇는다. ②에서 본 것처럼 두 종류가 생긴다. <b>재조합 플라스미드</b>는 인슐린 유전자가 <i>lacZ</i> 가운데에 끼어들어 <b><i>lacZ</i>가 둘로 끊겼다</b>. <b>빈 플라스미드</b>는 <i>lacZ</i>가 온전하다.',
-  '플라스미드를 대장균에 넣는다(형질전환). 그러나 모든 대장균이 플라스미드를 받아들이는 것은 아니다. 대장균은 세 종류가 된다 — ① 받지 못한 것 · ② 빈 플라스미드를 받은 것 · ③ 재조합 플라스미드를 받은 것.',
-  '<b>예시 1</b> — 대장균을 <b>항생제</b>이 든 배지에서 키운다. 항생제 저항성 유전자가 없는 ①은 죽는다. ②와 ③은 둘 다 플라스미드에 항생제 저항성 유전자가 있으므로 <b>둘 다 산다</b>. 항생제 배지만으로는 ②와 ③을 <b>구별할 수 없다</b>.',
-  '<b>예시 2</b> — 배지에 <b>X-gal과 젖당 유도체</b>를 함께 넣는다. ②는 <i>lacZ</i>가 온전하므로 β-갈락토시데이스를 만들고, 이 효소가 X-gal을 분해하여 ②의 군체가 <b>파랗게</b> 된다.',
+  '시험관의 플라스미드를 <b>대장균과 섞는다</b>. 플라스미드는 대장균 밖에 있다. 대장균이 플라스미드를 받아들여 형질이 바뀌는 것을 <b>형질전환</b>이라고 한다.',
+  '플라스미드는 세포막을 지나 대장균 <b>안으로 들어간다</b>. 그러나 받아들이는 대장균은 <b>일부</b>뿐이다. 대장균은 세 종류가 된다 — ① 받지 못한 것 · ② 빈 플라스미드를 받은 것 · ③ 재조합 플라스미드를 받은 것. 겉모습만으로는 셋을 구별할 수 없다.',
+  '대장균을 배지에 펼쳐 키우면 한 마리가 <b>분열을 거듭하여</b> 눈에 보이는 무리, 곧 <b>군체</b>가 된다. 한 군체의 대장균은 모두 한 마리에서 나왔으므로 <b>같은 플라스미드</b>를 가진다. 다음 단계부터 세 타원은 대장균 한 마리가 아니라 <b>그 대장균의 군체</b>이다.',
+  '<b>예시 1</b> — 대장균을 <b>항생제</b>가 든 배지에서 키운다. 항생제 저항성 유전자가 없는 ①은 죽는다. ②와 ③은 둘 다 플라스미드에 항생제 저항성 유전자가 있으므로 <b>둘 다 산다</b>. 항생제 배지만으로는 ②와 ③을 <b>구별할 수 없다</b>.',
+  '<b>예시 2</b> — 배지에 항생제와 함께 <b>X-gal과 젖당 유도체</b>를 넣는다. 젖당 유도체가 억제단백질을 떼어 내므로 <i>lacZ</i>가 전사된다(③). ②는 <i>lacZ</i>가 온전하므로 <b>β-갈락토시데이스</b>를 만들고, 이 효소가 X-gal을 분해하여 ②의 군체가 <b>파랗게</b> 된다.',
   '③은 인슐린 유전자가 끼어들어 <i>lacZ</i>가 끊겼으므로 β-갈락토시데이스를 만들지 못한다. X-gal이 분해되지 않아 ③의 군체는 <b>흰색</b>으로 남는다.',
-  '따라서 <b>흰 군체</b>가 재조합 플라스미드를 가진 대장균이다. 이 군체를 골라 증식시킨다. 이렇게 원하는 형질 전환체를 골라내는 것이 그림 Ⅲ-2의 <b>「형질 전환체의 선별」</b>이다.'
+  '만약 배지에 <b>항생제를 넣지 않는다면</b>? ①도 죽지 않고 자란다. ①은 플라스미드를 받지 못해 <i>lacZ</i>가 없으므로 β-갈락토시데이스를 만들지 못한다 → ①의 군체도 <b>흰색</b>이다. 그러면 흰 군체가 ①인지 ③인지 알 수 없다. 그래서 <b>항생제로 ①을 먼저 없애고</b> X-gal로 ②와 ③을 나눈다.',
+  '항생제 + X-gal 배지에서는 <b>흰 군체 = 재조합 플라스미드</b>를 가진 대장균이다. 이 군체를 골라 증식시킨다. 이렇게 원하는 형질 전환체를 골라내는 것이 그림 Ⅲ-2의 <b>「형질 전환체의 선별」</b>이다. ⑤에서 접시로 직접 해 보시오.'
 ];
-var SL_BAN = ['', '', '', '', '예시 1 · 항생제 배지', '예시 2 · 항생제 + X-gal + 젖당 유도체', '예시 2 · 항생제 + X-gal + 젖당 유도체', '흰 군체를 골라 증식시킨다'];
+var SL_BAN = ['', '', '', '플라스미드를 대장균과 섞는다', '일부 대장균만 받아들인다', '대장균 한 마리 → 군체', '예시 1 · 항생제 배지', '예시 2 · 항생제 + X-gal + 젖당 유도체', '예시 2 · 항생제 + X-gal + 젖당 유도체', '만약 항생제를 빼면? (X-gal + 젖당 유도체만)', '흰 군체를 골라 증식시킨다'];
 /* 국면 → 배지 (무대의 대장균 판정에 쓴다) */
-function selMedium(ph){ return ph >= 5 ? 'xgal' : (ph === 4 ? 'amp' : ''); }
+function selMedium(ph){ return ph === 9 ? 'xonly' : (ph >= 7 ? 'xgal' : (ph === 6 ? 'amp' : '')); }
 /* ★국면 → 물체 배치. 검사가 무는 순수 함수 */
 function selLayout(ph){
-  var o = {};
+  var o = {}, inCell = ph >= 4 && ph !== 5;
   o.full = { x:200, y:130, op:ph === 0 ? 1 : 0, sc:1 };
   o.cut  = { x:200, y:130, op:ph === 1 ? 1 : 0, sc:1 };
-  o.rec  = ph >= 3 ? { x:SL_CELL.rec.x, y:SL_CELL.y - 6, op:1, sc:0.42 } : { x:220, y:130, op:ph === 2 ? 1 : 0, sc:1 };
-  o.emp  = ph >= 3 ? { x:SL_CELL.emp.x, y:SL_CELL.y - 6, op:1, sc:0.42 } : { x:520, y:130, op:ph === 2 ? 1 : 0, sc:1 };
-  o.cells = ph >= 3 ? 1 : 0;
+  if (ph <= 2){
+    o.rec = { x:220, y:130, op:ph === 2 ? 1 : 0, sc:1 };
+    o.emp = { x:520, y:130, op:ph === 2 ? 1 : 0, sc:1 };
+  } else if (ph === 3){                       /* 대장균 밖에 떠 있다 */
+    o.rec = { x:SL_CELL.rec.x, y:72, op:1, sc:0.42 };
+    o.emp = { x:SL_CELL.emp.x, y:72, op:1, sc:0.42 };
+  } else {
+    o.rec = { x:SL_CELL.rec.x, y:SL_CELL.y - 6, op:inCell ? 1 : 0, sc:0.42 };
+    o.emp = { x:SL_CELL.emp.x, y:SL_CELL.y - 6, op:inCell ? 1 : 0, sc:0.42 };
+  }
+  o.free = { x:120, y:72, op:ph === 3 ? 1 : (ph === 4 ? 0.45 : 0), sc:0.42 };
+  o.cells = (ph >= 3 && ph !== 5) ? 1 : 0;
+  o.labels = ph >= 4 && ph !== 5;
+  o.grow = ph === 5 ? 1 : 0;
   var med = selMedium(ph);
   o.cell = {};
   KINDS.forEach(function(k){
     var L = med ? colonyLook(k.id, med) : { grow:true, color:'cream' };
-    /* ⑥에서는 ②만 색을 드러내고, ⑦에서 ③의 흰색을 드러낸다 — 한 국면에 한 사건 */
+    /* ⑧에서는 ②만 색을 드러내고, ⑨에서 ③의 흰색을 드러낸다 — 한 국면에 한 사건 */
     var col = L.color;
-    if (ph === 5 && k.id === 'rec') col = 'cream';
+    if (ph === 7 && k.id === 'rec') col = 'cream';
     o.cell[k.id] = { grow:L.grow, color:col };
   });
-  o.pick = ph === 7 ? 1 : 0;
+  o.enzEmp = ph >= 7 ? 1 : 0;
+  o.enzRec = ph >= 8 ? 1 : 0;
+  o.warn = ph === 9 ? 1 : 0;
+  o.pick = ph === 10 ? 1 : 0;
   return o;
 }
 function selCellFill(c){ if (!c.grow) return '#ECEFF1'; if (c.color === 'blue') return '#C5CAF5'; if (c.color === 'white') return '#FFFFFF'; return C_CELL; }
 function selCellText(c, ph){
-  if (ph < 4) return '';
+  if (ph < 6) return '';
   if (!c.grow) return '✕ 죽는다';
   if (c.color === 'blue') return '파란색';
   if (c.color === 'white') return '흰색';
   return '✓ 산다';
 }
+/* 군체 아래 두 줄 — 세포 안에서 일어나는 사슬 */
 function selDetail(kind, ph){
-  if (ph === 4) return kind === 'none' ? '항생제 저항성 유전자 없음' : '항생제 저항성 유전자 있음';
-  if (ph >= 5 && kind === 'emp') return 'lacZ 온전 → 효소 ○';
-  if (ph >= 6 && kind === 'rec') return 'lacZ 끊김 → 효소 ✕';
-  return '';
+  if (ph === 6) return [hasAmpR(kind) ? '항생제 저항성 유전자 있음' : '항생제 저항성 유전자 없음', ''];
+  if (ph < 7) return ['', ''];
+  if (kind === 'emp') return ['lacZ 온전 → 효소 ○', 'X-gal 분해 → 파란 색소'];
+  if (kind === 'rec' && ph >= 8) return ['lacZ 끊김 → 효소 ✕', 'X-gal 그대로 → 흰색'];
+  if (kind === 'none' && ph === 9) return ['lacZ 없음 → 효소 ✕', 'X-gal 그대로 → 흰색'];
+  if (kind === 'none') return ['항생제에 죽었다', ''];
+  return ['', ''];
 }
 function selApply(){
   var ph = PH.sel, L = selLayout(ph);
-  ['full', 'cut', 'rec', 'emp'].forEach(function(k){ var q = L[k]; putAt('sl_' + k, q.x, q.y, q.op, q.sc); });
+  ['full', 'cut', 'rec', 'emp', 'free'].forEach(function(k){ var q = L[k]; putAt('sl_' + k, q.x, q.y, q.op, q.sc); });
+  fadeTo('sl_freeT', ph === 4 ? 1 : 0);
   fadeTo('sl_site', ph === 0 ? 1 : 0);
   fadeTo('sl_cutT', ph === 1 ? 1 : 0);
   fadeTo('sl_lab2', ph === 2 ? 1 : 0);
   fadeTo('sl_cells', L.cells);
+  fadeTo('sl_grow', L.grow);
   setText('sl_ban', SL_BAN[ph]);
   KINDS.forEach(function(k){
     var c = L.cell[k.id], el = document.getElementById('sl_cf_' + k.id);
-    if (el){ el.style.fill = selCellFill(c); el.setAttribute('stroke', c.color === 'white' ? C_INK : C_CELL_LINE); el.setAttribute('stroke-width', c.color === 'white' ? '4' : '2.5'); }
+    var maybe = (ph === 9 && k.id === 'none');      /* 항생제를 뺐을 때 — 가정이므로 점선 */
+    if (el){ el.style.fill = selCellFill(c); el.setAttribute('stroke', c.color === 'white' ? C_INK : C_CELL_LINE); el.setAttribute('stroke-width', c.color === 'white' ? '4' : '2.5'); el.setAttribute('stroke-dasharray', maybe ? '10,6' : ''); }
+    fadeTo('sl_lb_' + k.id, L.labels ? 1 : 0);
     setText('sl_t_' + k.id, selCellText(c, ph));
-    setText('sl_d_' + k.id, selDetail(k.id, ph));
+    var d = selDetail(k.id, ph);
+    setText('sl_d_' + k.id, d[0]);
+    setText('sl_e_' + k.id, d[1]);
   });
-  fadeTo('sl_x', (ph >= 4 && !L.cell.none.grow) ? 1 : 0);
+  fadeTo('sl_x', (ph >= 6 && !L.cell.none.grow) ? 1 : 0);
   fadeTo('sl_dot', L.cell.emp.color === 'blue' ? 1 : 0);
+  fadeTo('sl_enz_emp', L.enzEmp);
+  fadeTo('sl_enz_rec', L.enzRec);
+  fadeTo('sl_warn', L.warn);
   fadeTo('sl_pick', L.pick);
 }
 function renderSel(){
@@ -1849,19 +1836,39 @@ function plateApply(){
     fadeTo('pcp_' + c.id, state.picked === c.id ? 1 : 0);
   });
 }
+var PEEK = '';      /* ⑤ 속을 들여다본 군체 — 화면에만 쓴다(저장하지 않음) */
+var MED_VERDICT = { plain:'셋 다 같아 보인다 ✕', amp:'②와 ③을 구별할 수 없다 ✕', xonly:'①과 ③이 둘 다 흰색 ✕', xgal:'흰 군체 = ③ 뿐 ○' };
 function plateTblHtml(){
   var h = '<table class="gtbl"><thead><tr><th>대장균</th>';
   MEDIA.forEach(function(m){ h += '<th' + (state.medium === m.id ? ' class="on"' : '') + '>' + m.name + '</th>'; });
   h += '</tr></thead><tbody>';
   KINDS.forEach(function(k){
-    h += '<tr><td class="rk">' + k.name + '</td>';
+    h += '<tr><td class="rk">' + k.name + '<small>저항성 유전자 ' + (hasAmpR(k.id) ? '○' : '✕') + ' · <i>lacZ</i> ' + lacZState(k.id) + '</small></td>';
     MEDIA.forEach(function(m){
-      if (state.medSeen[m.id]) h += '<td>' + lookText(colonyLook(k.id, m.id)) + '</td>';
+      if (state.medSeen[m.id]) h += '<td>' + lookText(colonyLook(k.id, m.id)) + '<small>' + lookWhy(k.id, m.id) + '</small></td>';
       else h += '<td class="blank">?</td>';
     });
     h += '</tr>';
   });
-  return h + '</tbody></table>';
+  h += '<tr class="verdict"><td class="rk">재조합만 골라낼 수 있는가?</td>';
+  MEDIA.forEach(function(m){ h += state.medSeen[m.id] ? '<td>' + MED_VERDICT[m.id] + '</td>' : '<td class="blank">?</td>'; });
+  return h + '</tr></tbody></table>';
+}
+function peekHtml(){
+  var c = colById(PEEK);
+  if (!c) return '<div class="ptitle">🔎 군체 속 들여다보기</div><p style="margin:0">접시의 군체를 누르면 그 군체의 대장균이 가진 플라스미드를 여기에 보여 준다.</p>';
+  var k = c.kind, kind = null; KINDS.forEach(function(x){ if (x.id === k) kind = x; });
+  var svg = '<svg viewBox="0 0 160 110" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="군체 속 대장균">' +
+            '<ellipse cx="80" cy="55" rx="74" ry="46" fill="' + C_CELL + '" stroke="' + C_CELL_LINE + '" stroke-width="2.5"/>' +
+            '<path d="M18,46 q12,-18 24,-4 q14,14 24,-3" fill="none" stroke="#90A4AE" stroke-width="2.5"/>';
+  if (k === 'none') svg += txt('', 96, 74, '플라스미드 없음', 12, C_SUB, 'middle', '800');
+  else svg += '<g transform="translate(104,52) scale(0.5)">' + ringSvg(56, k === 'rec' ? { ins:true } : {}) + '</g>';
+  svg += '</svg>';
+  return '<div class="ptitle">🔎 군체 속 들여다보기</div><div class="peek">' + svg + '<ul>' +
+         '<li><b>' + kind.name + '</b></li>' +
+         '<li>항생제 저항성 유전자 ' + (hasAmpR(k) ? '<b>있음</b>' : '<b>없음</b>') + '</li>' +
+         '<li><i>lacZ</i> <b>' + lacZState(k) + '</b> → β-갈락토시데이스 ' + (lacZIntact(k) ? '<b>만든다</b>' : '<b>못 만든다</b>') + '</li>' +
+         (k === 'rec' ? '<li>인슐린 유전자 <b>있음</b></li>' : '') + '</ul></div>';
 }
 function renderPlate(){
   if (!MOUNT.plate){ setHTML('plateStage', plateSvg()); MOUNT.plate = true; }
@@ -1873,17 +1880,20 @@ function renderPlate(){
   });
   setHTML('medChips', h);
   setHTML('plateTbl', plateTblHtml());
+  setHTML('peekBox', peekHtml());
   var t = document.getElementById('plateProg');
-  if (t) t.textContent = '배지 ' + medCount() + ' / 3 · ' + (state.picked ? '군체를 골랐다' : '고른 군체 없음');
+  if (t) t.textContent = '배지 ' + medCount() + ' / ' + MEDIA.length + ' · ' + (state.picked ? '군체를 골랐다' : '고른 군체 없음');
 }
 function plMedium(id){
   var ok = false; MEDIA.forEach(function(m){ if (m.id === id) ok = true; });
   if (!ok) return;
   state.medium = id; state.medSeen[id] = true;
-  if (id !== 'xgal') state.picked = '';      /* ★X-gal 배지에서 고른 것만 뜻이 있다 */
+  if (id !== 'xgal') state.picked = '';      /* ★항생제 + X-gal 배지에서 고른 것만 뜻이 있다 */
+  var pc = colById(PEEK); if (pc && !colonyLook(pc.kind, id).grow) PEEK = '';
   var msg = {
     plain:'일반 배지에서는 대장균이 <b>모두</b> 자란다. 어느 군체가 무엇을 받았는지 알 수 없다.',
     amp:'항생제 배지에서는 플라스미드를 받지 못한 대장균이 <b>자라지 못한다</b>(흐린 ✕). 그러나 남은 군체는 모두 같은 색이다 — 빈 플라스미드와 재조합 플라스미드를 <b>구별할 수 없다</b>.',
+    xonly:'항생제가 없으므로 군체가 <b>모두</b> 자란다. 파란 군체와 흰 군체로 나뉘지만, <b>흰 군체가 너무 많다</b>. 흰 군체를 몇 개 눌러 속을 확인하시오.',
     xgal:'항생제 + X-gal 배지에서는 자란 군체가 <b>파란색</b>과 <b>흰색</b>으로 나뉜다. 골라 키울 군체를 접시에서 누르시오.'
   }[id];
   showFb('fb_plate', 'info', msg);
@@ -1892,19 +1902,26 @@ function plMedium(id){
 function plPick(id){
   var c = colById(id);
   if (!c) return;
-  if (state.medium !== 'xgal'){
-    showFb('fb_plate', 'warn', state.medium === '' ? '먼저 오른쪽에서 배지를 고르시오.' :
-      '이 배지에서는 빈 플라스미드를 가진 군체와 재조합 플라스미드를 가진 군체가 <b>똑같이 보인다</b>. 항생제 + X-gal 배지로 바꾸어 고르시오.');
-    return;
-  }
-  var L = colonyLook(c.kind, 'xgal');
+  if (state.medium === ''){ showFb('fb_plate', 'warn', '먼저 오른쪽에서 배지를 고르시오.'); return; }
+  var L = colonyLook(c.kind, state.medium);
   if (!L.grow){ showFb('fb_plate', 'warn', '그 자리에는 군체가 자라지 않았다. 플라스미드를 받지 못한 대장균이 항생제에 죽은 자리이다.'); return; }
+  PEEK = id;
+  if (state.medium === 'xonly'){
+    showFb('fb_plate', 'info', L.color === 'blue' ? '파란 군체 — 속을 보니 <b>빈 플라스미드</b>이다.' :
+      (c.kind === 'none' ? '⚠️ 흰 군체인데 속을 보니 <b>플라스미드가 없다</b>. 항생제가 없으면 플라스미드를 받지 못한 대장균도 흰 군체로 섞인다. 이 배지에서는 고를 수 없다.' :
+                           '흰 군체 — 속을 보니 <b>재조합 플라스미드</b>이다. 그러나 이 배지의 흰 군체에는 플라스미드가 없는 것도 섞여 있다. 다른 흰 군체도 눌러 보시오.'));
+    renderPlate(); return;
+  }
+  if (state.medium !== 'xgal'){
+    showFb('fb_plate', 'warn', '이 배지에서는 빈 플라스미드를 가진 군체와 재조합 플라스미드를 가진 군체가 <b>똑같이 보인다</b>. 속은 오른쪽에 보였다. 골라 키울 군체는 항생제 + X-gal 배지에서 고르시오.');
+    renderPlate(); return;
+  }
   if (L.color === 'blue'){
-    showFb('fb_plate', 'bad', '❌ 옳지 않다. <b>파란 군체</b>는 <i>lacZ</i>가 온전하여 X-gal을 분해한 것이다. 인슐린 유전자가 들어가지 않은 <b>빈 플라스미드</b>를 가진 대장균이다.');
-    return;
+    showFb('fb_plate', 'bad', '❌ 옳지 않다. <b>파란 군체</b>는 <i>lacZ</i>가 온전하여 X-gal을 분해한 것이다. 속을 보면 인슐린 유전자가 없는 <b>빈 플라스미드</b>이다.');
+    renderPlate(); return;
   }
   state.picked = id;
-  showFb('fb_plate', 'good', '✅ 옳다. <b>흰 군체</b>는 인슐린 유전자가 <i>lacZ</i> 가운데에 끼어들어 <i>lacZ</i>가 끊긴 것이다. 재조합 플라스미드를 가진 대장균이다.');
+  showFb('fb_plate', 'good', '✅ 옳다. <b>흰 군체</b>는 인슐린 유전자가 <i>lacZ</i> 가운데에 끼어들어 <i>lacZ</i>가 끊긴 것이다. 속을 보면 <b>재조합 플라스미드</b>이다. 이 배지의 흰 군체는 모두 재조합이다.');
   saveState(); renderPlate(); updateAll();
 }
 
@@ -2511,7 +2528,7 @@ STG.lig = { last:LG_STEP.length - 1, steps:LG_STEP, capOf:ligCap, cap:'lg_cap', 
 STG.lac = { last:LC_STEP.length - 1, steps:LC_STEP, capOf:function(ph){ return LC_CAP[ph]; }, cap:'lc_cap', prog:'lacProg', fb:'fb_lac', seen:'lacSeen', render:renderLac,
   done:function(){ return lacDrops() === 2; },
   block:null };
-STG.sel = { last:7, steps:SL_STEP, capOf:function(ph){ return SL_CAP[ph]; }, cap:'sl_cap', prog:'selProg', fb:'fb_sel', seen:'selSeen', render:renderSel,
+STG.sel = { last:SL_STEP.length - 1, steps:SL_STEP, capOf:function(ph){ return SL_CAP[ph]; }, cap:'sl_cap', prog:'selProg', fb:'fb_sel', seen:'selSeen', render:renderSel,
   done:function(){ return true; }, block:null };
 STG.mab = { last:5, steps:MB_STEP, capOf:function(ph){ return MB_CAP[ph]; }, cap:'mb_cap', prog:'mabProg', fb:'fb_mab', seen:'mabSeen', render:renderMab,
   done:function(){ return true; }, block:null };
@@ -2584,20 +2601,6 @@ var Q_LAC = [
         ''],
     ex:'<i>lacZ</i> → (전사·번역) → β-갈락토시데이스 → X-gal 분해 → <b>파랑</b>. 이 사슬 가운데 하나라도 끊기면 색이 생기지 않는다. ④의 청백 선별은 이 사슬을 이용한다.' }
 ];
-var Q_HOST = [
-  { id:'qh1',
-    q:'청백 선별에 염색체의 <i>lacZ</i>가 고장 난 대장균을 쓰는 까닭으로 옳은 것은?',
-    ch:['대장균이 X-gal을 먹이로 쓰지 못하게 하려고',
-        '군체의 색이 받아들인 플라스미드의 <i>lacZ</i>에 따라서만 정해지게 하려고',
-        '대장균이 항생제에 죽지 않게 하려고',
-        '고장 난 <i>lacZ</i> 덕분에 대장균이 플라스미드를 훨씬 더 많이 받아들이게 하려고'],
-    a:1,
-    no:['옳지 않다. X-gal은 먹이가 아니라, 효소가 분해하면 파란 색소가 생기는 물질이다.',
-        '',
-        '옳지 않다. 항생제에 견디게 하는 것은 플라스미드의 항생제 저항성 유전자이다.',
-        '옳지 않다. <i>lacZ</i>는 플라스미드를 받아들이는 것과 관계가 없다.'],
-    ex:'염색체의 <i>lacZ</i>가 온전하면 대장균 스스로 β-갈락토시데이스를 만들어, 재조합 플라스미드를 받은 대장균도 파랗게 된다. 고장 난 균주를 써야 군체의 색이 <b>플라스미드의 <i>lacZ</i></b>만 나타낸다.' }
-];
 var Q_SEL = [
   { id:'q4',
     q:'예시 1(항생제 배지)만으로 선별할 때의 한계로 옳은 것은?',
@@ -2626,19 +2629,17 @@ var Q_SEL = [
 ];
 var Q_PLATE = [
   { id:'q6',
-    q:'⑤에서 숙주 대장균이 자기 염색체에 <b>정상 <i>lacZ</i></b>를 가지고 있었다면, 항생제 + X-gal 배지의 결과는 어떻게 되었겠는가?',
-    ch:['자란 군체가 모두 파랗게 되어 빈 플라스미드와 재조합 플라스미드를 구별할 수 없다.',
-        '염색체의 <i>lacZ</i>가 X-gal을 막아 자란 군체가 모두 희게 되고, 구별할 수 없다.',
-        '염색체의 <i>lacZ</i> 덕분에 플라스미드를 받지 못한 대장균도 항생제 배지에서 함께 자라게 된다.',
-        '색은 플라스미드에 있는 <i>lacZ</i>로만 정해지므로 결과는 달라지지 않는다.'],
-    a:0,
-    no:['',
-        '옳지 않다. 정상 <i>lacZ</i>는 β-갈락토시데이스를 만들어 X-gal을 분해한다. 군체는 희게 되지 않고 파랗게 된다.',
-        '옳지 않다. 항생제 저항성은 <i>lacZ</i>와 관계가 없다. 플라스미드를 받지 못한 대장균은 여전히 죽는다.',
-        '옳지 않다. 염색체의 <i>lacZ</i>도 β-갈락토시데이스를 만든다. 그러면 플라스미드의 <i>lacZ</i>가 끊겼는지와 상관없이 파랗게 된다.'],
-    ex:'재조합 플라스미드를 받은 대장균도 <b>염색체의 <i>lacZ</i></b>로 β-갈락토시데이스를 만들어 파랗게 된다. 그러면 색으로 구별할 수 없다. 그래서 이 실험에는 자기 <i>lacZ</i>가 고장 난 대장균을 쓴다(③).',
-    hint:['③-2에서 이 실험에 쓰는 대장균은 어떤 균주라고 하였는가?',
-          '흰색이 나오려면 세포 안에 β-갈락토시데이스가 <b>하나도</b> 없어야 한다.'] }
+    q:'⑤의 항생제 + X-gal 배지에서 골라 증식시켜야 하는 군체와 그 까닭으로 옳은 것은?',
+    ch:['파란 군체 — <i>lacZ</i>가 온전하여 인슐린 유전자가 함께 발현되기 때문이다.',
+        '흰 군체 — 인슐린 유전자가 <i>lacZ</i> 가운데에 끼어들어 β-갈락토시데이스를 만들지 못했기 때문이다.',
+        '흰 군체 — 플라스미드를 받지 못해 X-gal을 분해하지 못했기 때문이다.',
+        '아무 군체나 — 항생제가 든 배지에서 자란 군체는 모두 인슐린 유전자가 든 재조합 플라스미드를 가졌기 때문이다.'],
+    a:1,
+    no:['옳지 않다. 파란 군체는 <i>lacZ</i>가 온전한 <b>빈 플라스미드</b>를 가졌다. 인슐린 유전자가 없다.',
+        '',
+        '옳지 않다. 플라스미드를 받지 못한 대장균은 항생제 저항성 유전자가 없어 이 배지에서 자라지 못한다.',
+        '옳지 않다. 빈 플라스미드를 받은 대장균도 항생제 저항성 유전자가 있어 자란다.'],
+    ex:'항생제가 플라스미드를 받지 못한 대장균을 없애고, X-gal이 남은 것을 색으로 나눈다. <b>흰 군체</b> = <i>lacZ</i> 끊김 = 인슐린 유전자가 들어간 재조합 플라스미드.' }
 ];
 var Q_INS = [
   { id:'q7a', lv:'하',
@@ -2732,7 +2733,7 @@ var Q_KIT = [
         '옳지 않다. 시료가 검사선까지 오지 못해서 검사선이 안 나타났을 수도 있다.',
         '',
         '옳지 않다. 대조선은 hCG와 관계없이 남은 hCG 항체가 붙잡혀 나타난다.'],
-    ex:'대조선은 <b>검사가 제대로 이루어졌다는 표시</b>이다. 대조선이 없으면 무효로 보고 다시 검사한다(교과서 밖 설명).' }
+    ex:'대조선은 <b>검사가 제대로 이루어졌다는 표시</b>이다. 대조선이 없으면 무효로 보고 다시 검사한다(<span class="outtb">교과서 밖 설명</span>).' }
 ];
 var Q_ADC = [
   { id:'q12',
@@ -2871,7 +2872,7 @@ var SELFCHECK = [
 /* ══════════════════ 15. 문항 엔진 ══════════════════
    ★답은 몇 번이든 고칠 수 있다. 정오는 기록하지 않는다 — 마지막 선택만 화면 복원용으로 저장한다. */
 var qEls = {};
-function SECQ(){ return [Q_INTRO, Q_CUT, Q_LIG, Q_LAC, Q_HOST, Q_SEL, Q_PLATE, Q_INS, Q_MAB, Q_KIT, Q_ADC, Q_STEM, Q_CR]; }
+function SECQ(){ return [Q_INTRO, Q_CUT, Q_LIG, Q_LAC, Q_SEL, Q_PLATE, Q_INS, Q_MAB, Q_KIT, Q_ADC, Q_STEM, Q_CR]; }
 function ALLQ(){ var L = []; SECQ().forEach(function(x){ L = L.concat(x); }); return L.concat(PRACTICE); }
 function qById(id){ var L = ALLQ(), i; for (i = 0; i < L.length; i++){ if (L[i].id === id) return L[i]; } return null; }
 function pickStore(id){ return (id.indexOf('p') === 0) ? state.pPick : state.qPick; }
@@ -3089,12 +3090,10 @@ var SEC_DEF = {
            run:function(){ state.ligFrag = ''; state.ligTried = {}; state.ligSeen = false; PH.lig = 0; } },
   lac:   { qs:function(){ return Q_LAC; },   ask:false, fb:'fb_lac',   msg:'③을 처음 단계로 되돌리고 시험관과 문항을 지웠다.',
            run:function(){ state.lacDrop = {}; state.lacSeen = false; PH.lac = 0; } },
-  host:  { qs:function(){ return Q_HOST; },  ask:false, fb:'fb_host',  msg:'③-2에서 고른 대장균과 문항을 지웠다.',
-           run:function(){ state.hostSel = ''; state.hostSeen = {}; } },
   sel:   { qs:function(){ return Q_SEL; },   ask:false, fb:'fb_sel',   msg:'④를 처음 단계로 되돌리고 문항을 지웠다.',
            run:function(){ state.selSeen = false; PH.sel = 0; } },
   plate: { qs:function(){ return Q_PLATE; }, ask:false, fb:'fb_plate', msg:'⑤의 배지와 고른 군체, 문항을 지웠다.',
-           run:function(){ state.medium = ''; state.medSeen = {}; state.picked = ''; } },
+           run:function(){ state.medium = ''; state.medSeen = {}; state.picked = ''; PEEK = ''; } },
   ins:   { qs:function(){ return Q_INS; },   ask:false, fb:'fb_ins',   msg:'⑥의 문항을 지웠다.',
            run:function(){ state.insSeen = false; } },
   mab:   { qs:function(){ return Q_MAB; },   ask:false, fb:'fb_mab',   msg:'⑦을 처음 단계로 되돌리고 배양 결과와 문항을 지웠다.',
@@ -3183,7 +3182,6 @@ function restoreUI(){
   renderCut();
   renderLig();
   renderLac();
-  renderHost();
   renderSel();
   renderPlate();
   renderIns();
@@ -3199,7 +3197,6 @@ function restoreUI(){
   renderQuizInto(Q_CUT,   'cutQ',   'plas');
   renderQuizInto(Q_LIG,   'ligQ',   'plas');
   renderQuizInto(Q_LAC,   'lacQ',   'lacz');
-  renderQuizInto(Q_HOST,  'hostQ',  'lacz');
   renderQuizInto(Q_SEL,   'selQ',   'plas');
   renderQuizInto(Q_PLATE, 'plateQ', 'plas');
   renderQuizInto(Q_INS,   'insQ',   'gene');
@@ -3234,7 +3231,7 @@ function init(){
       else if (typeof sv === typeof state[k]){ state[k] = sv; }
     });
   }
-  ['ligTried', 'lacDrop', 'hostSeen', 'medSeen', 'mabTry', 'kitOk', 'stemSeen', 'factOk', 'crTried', 'caseOk', 'qPick', 'pPick', 'ta', 'self'].forEach(function(k){
+  ['ligTried', 'lacDrop', 'medSeen', 'mabTry', 'kitOk', 'stemSeen', 'factOk', 'crTried', 'caseOk', 'qPick', 'pPick', 'ta', 'self'].forEach(function(k){
     if (!state[k] || typeof state[k] !== 'object' || Array.isArray(state[k])) state[k] = {};
   });
   /* ★범위 밖의 값·없는 이름은 걸러 낸다 */
@@ -3252,8 +3249,6 @@ function init(){
   if (!pc || state.medium !== 'xgal' || colonyLook(pc.kind, 'xgal').color !== 'white') state.picked = '';
   ['ligSeen', 'lacSeen', 'selSeen', 'insSeen', 'mabSeen', 'kitSeen', 'adcSeen', 'stemAny', 'crSeen'].forEach(function(k){ state[k] = (state[k] === true); });
   if (!guideBy(state.crGuide)) state.crGuide = '';
-  if (!hostBy(state.hostSel)) state.hostSel = '';
-  Object.keys(state.hostSeen).forEach(function(k){ if (!hostBy(k) || state.hostSeen[k] !== true) delete state.hostSeen[k]; });
   Object.keys(state.caseOk).forEach(function(k){ if (!caseBy(k) || state.caseOk[k] !== true) delete state.caseOk[k]; });
   Object.keys(state.crTried).forEach(function(k){ if (!guideBy(k) || state.crTried[k] !== true) delete state.crTried[k]; });
   if (!stemRowBy(state.stemSel)) state.stemSel = '';

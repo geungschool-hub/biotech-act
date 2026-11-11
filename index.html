@@ -1412,10 +1412,10 @@ function lgInsSvg(k){
 }
 function lgOvPt(s){ var a = s * LG_OV.gap * Math.PI / 180; return { x:r1(LG_OV.cx + LG_OV.r * Math.cos(a)), y:r1(LG_OV.cy + LG_OV.r * Math.sin(a)) }; }
 var LG_TUBE = [
-  { id:'rec',  n1:'재조합',      n2:'플라스미드',    c:3 },
-  { id:'emp',  n1:'다시 닫힌',   n2:'빈 플라스미드', c:4 },
-  { id:'open', n1:'열린 채 남은', n2:'플라스미드',    c:2 },
-  { id:'ins',  n1:'남은 인슐린', n2:'유전자 조각',   c:4 }
+  { id:'rec',  n1:'재조합',      n2:'플라스미드',    why:'유전자가 들어갔다' },
+  { id:'emp',  n1:'다시 닫힌',   n2:'빈 플라스미드', why:'제 말단끼리 붙었다' },
+  { id:'open', n1:'열린 채 남은', n2:'플라스미드',    why:'잇지 못하고 열렸다' },
+  { id:'ins',  n1:'남은 인슐린', n2:'유전자 조각',   why:'짝을 못 만났다' }
 ];
 function lgTubeIcon(id, x, y){
   var g = '<g transform="translate(' + x + ',' + y + ')">';
@@ -1465,12 +1465,12 @@ function ligSvg(){
        txt('', LG_OV.cx, LG_OV.cy + 5, '재조합 DNA', 13, C_PLAS_INK, 'middle', '800') + '</g>';
   /* 시험관 속(예시) */
   var tb = '<rect x="206" y="244" width="494" height="148" rx="14" fill="#F7FBFF" stroke="#9AA0A6" stroke-width="2"/>' +
-           txt('', 453, 264, '시험관 속에 함께 있는 것 (한 가지 예)', 14.5, C_INK, 'middle', '800');
+           txt('', 453, 264, '시험관 속에 함께 있는 것 — 네 종류', 14.5, C_INK, 'middle', '800');
   LG_TUBE.forEach(function(t, c){
     var cx = 268 + c * 124;
-    for (var n = 0; n < t.c; n++) tb += lgTubeIcon(t.id, cx + (n % 2 ? 20 : -20), 288 + Math.floor(n / 2) * 30);
-    tb += txt('', cx, 352, t.n1, 13.5, C_INK, 'middle', '800') + txt('', cx, 368, t.n2, 13.5, C_INK, 'middle', '800') +
-          txt('', cx, 385, t.c + '개', 13, C_SUB, 'middle', '700');
+    tb += '<g transform="translate(' + cx + ',305) scale(1.6)">' + lgTubeIcon(t.id, 0, 0) + '</g>';
+    tb += txt('', cx, 348, t.n1, 13.5, C_INK, 'middle', '800') + txt('', cx, 364, t.n2, 13.5, C_INK, 'middle', '800') +
+          txt('', cx, 383, t.why, 12.5, C_SUB, 'middle', '700');
   });
   h += '<g id="lg_tube" class="rfade" opacity="0">' + tb + '</g>';
   return h;
@@ -1490,7 +1490,7 @@ function ligCap(ph){
   if (ph === 2) return '<b>DNA 연결효소</b>가 위 가닥의 <b>틈 ㉠</b>으로 가서 끊어진 위 가닥을 하나로 잇는다(검은 칸).';
   if (ph === 3) return 'DNA 연결효소가 아래 가닥의 <b>틈 ㉡</b>도 잇는다. 점착성 말단이 엇갈려 있으므로 이음매 하나에 틈이 <b>두 곳</b>(위 가닥 · 아래 가닥) 있다. 이제 이 이음매는 두 가닥이 모두 이어졌다.';
   if (ph === 4) return '인슐린 유전자 조각의 <b>반대쪽 끝</b>도 같은 방식으로 맞물리고, DNA 연결효소가 그곳의 두 틈을 잇는다. 연결효소가 모두 <b>네 곳의 틈</b>을 이어, 플라스미드에 인슐린 유전자가 들어간 둥근 <b>재조합 DNA</b>가 완성되었다.';
-  return '시험관 속 결과는 <b>확률의 문제</b>이다. 조각들은 무작위로 부딪히고, 플라스미드의 말단은 인슐린 유전자 조각과도, <b>자기 반대쪽 말단</b>(AATT ↔ TTAA)과도 맞물릴 수 있다. 그래서 <b>재조합 플라스미드</b>와 함께 <b>다시 닫힌 빈 플라스미드</b>, 이어지지 않은 조각이 섞여 있다(개수는 한 가지 예이다). 대장균에 넣은 뒤 재조합 플라스미드를 가진 것만 <b>골라내야</b> 한다(④).';
+  return '시험관 속 결과는 <b>확률의 문제</b>이다. 조각들은 무작위로 부딪히고, 플라스미드의 말단은 인슐린 유전자 조각과도, <b>자기 반대쪽 말단</b>(AATT ↔ TTAA)과도 맞물릴 수 있다. 그래서 <b>재조합 플라스미드</b>와 함께 <b>다시 닫힌 빈 플라스미드</b>, 열린 채 남은 플라스미드, 짝을 못 만난 인슐린 유전자 조각이 섞여 있다. 어느 것이 얼마나 생길지는 그때그때 다르다. 대장균에 넣은 뒤 재조합 플라스미드를 가진 것만 <b>골라내야</b> 한다(④).';
 }
 function ligApply(){
   var ph = PH.lig, k = state.ligFrag, okA = (k === 'A'), nT = LG.x0, nB = LG.x0 + 4 * LG.w;

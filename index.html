@@ -3706,13 +3706,13 @@ function init(){
   SECQ().forEach(function(L){
     L.forEach(function(p){
       var v = state.qPick[p.id];
-      if (v !== undefined && !(typeof v === 'number' && v >= 0 && v < p.ch.length)) delete state.qPick[p.id];
+      if (v !== undefined && !(typeof v === 'number' && Math.round(v) === v && v >= 0 && v < p.ch.length)) delete state.qPick[p.id];
     });
   });
   Object.keys(state.qPick).forEach(function(k){ if (!qById(k) || k.indexOf('p') === 0) delete state.qPick[k]; });
   PRACTICE.forEach(function(p){
     var v = state.pPick[p.id];
-    if (v !== undefined && !(typeof v === 'number' && v >= 0 && v < p.ch.length)) delete state.pPick[p.id];
+    if (v !== undefined && !(typeof v === 'number' && Math.round(v) === v && v >= 0 && v < p.ch.length)) delete state.pPick[p.id];
   });
   Object.keys(state.pPick).forEach(function(k){ if (!qById(k) || k.indexOf('p') !== 0) delete state.pPick[k]; });
   state.teacherUnlock = false;
